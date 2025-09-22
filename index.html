@@ -1,1 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ABDELRAHMAN EL KHATIB— Video Feed</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    html,body { height:100%; }
+    body {
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:  linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);;
+      color: #fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-y: auto;
+    }
+
+    header { position: fixed; top:0; left:0; right:0; height:72px; display:flex; align-items:center; justify-content:space-between; padding: 0 48px; background: rgba(0,44,64,0.92); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 9999; }
+    .logo { font-weight: 700; letter-spacing: 1.6px; color: #ffffff; font-size: 1.05rem; }
+    nav a { color: #fff; text-decoration: none; margin-left: 28px; opacity: 0.9; font-weight: 500; font-size: 0.95rem; }
+    nav a:hover { color: #04e3b2; }
+    .spacer { height: 72px; }
+
+    .hero { position: relative; width: 100%; height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #001826; }
+
+    .video-container { position: relative; width: 90%; max-width: 1200px; height: 70vh; border-radius: 15px; overflow-y: auto; overflow-x: hidden; box-shadow: 0 20px 60px  #011a28; scroll-behavior: smooth; scroll-snap-type: y mandatory; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+    /* each section fills the container so only one is visible at a time */
+    .hero-section { height: 100%; width: 100%; position: relative; flex-shrink: 0; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+
+    /* each section has its own video element positioned absolutely to perfectly overlap */
+    .sectionVideo { position: absolute; top:0; left:0; width:100%; height:100%; /* keep aspect ratio without cropping */ object-fit:fill; object-position: center center; background: #001826; display: block; opacity: 0; transition: opacity 900ms ease; z-index: 1; }
+    .sectionVideo.visible { opacity: 1; }
+
+    /* overlay text (per section) - hidden until section active with delayed appearance */
+    .hero-overlay { position: absolute; z-index:20; max-width: 860px; padding: 28px 30px; text-align: left; bottom: 2px; left: 28px; color: #ffffff; font-weight: 1200;pointer-events: none; opacity: 0; transform: translateY(12px); transition: opacity 420ms ease, transform 420ms ease;text-shadow: 0 8px 24px rgba(0,0,0,0.8); }
+    .hero-section.show-overlay .hero-overlay { opacity: 1; transform: translateY(0); }
+
+    .kicker { font-size: 0.85rem; letter-spacing: 2.4px; opacity: 2; margin-bottom:8px; }
+    .headline { font-size: 2.2rem; line-height: 1.03; font-weight: 700; margin-bottom:8px; letter-spacing: -0.6px; }
+    .desc { font-size: 1rem; opacity:2; line-height: 1.6; max-width: 640px; }
+    .desc b { color: #04e3b2; font-weight:700; }
+
+    .cta { margin-top: 28px; pointer-events: auto; }
+    .btn { display:inline-block; padding: 12px 28px; border-radius: 30px; border: 2px solid #04e3b2; color: #fff; text-decoration:none; font-weight:600; transition: all .25s ease; background: transparent; }
+    .btn:hover { background: #04e3b2; color:#03293b; }
+
+    /* overlay elements animation — we toggle .show on these to reveal text with stagger */
+    .overlay-anim { opacity:1.5; transform: translateY(18px) scale(0.99); transition: all 520ms cubic-bezier(.2,.9,.2,1); }
+    .overlay-anim.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    .scroll-arrow { position: absolute; right: 28px; bottom: 20px; z-index: 20; font-size: 1.4rem; opacity: 0.78; cursor: pointer; user-select: none; animation: bounce 1.6s infinite; color: #fff; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    .video-container::-webkit-scrollbar { width: 8px; }
+    .video-container::-webkit-scrollbar-track { background: #001826; border-radius: 4px; }
+    .video-container::-webkit-scrollbar-thumb { background: #001826; border-radius: 4px; }
+    .video-container::-webkit-scrollbar-thumb:hover { background: #001826; }
+
+    /* rest of page styles unchanged */
+    .about-section { background: linear-gradient(135deg, #001826, #002235); padding: 80px 56px; position: relative; }
+    .about-container { max-width: 1200px; margin: 0 auto; }
+    .about-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 24px; color: #04e3b2; text-align: center; }
+    .about-subtitle { font-size: 1.2rem; opacity: 0.8; text-align: center; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+    .about-text { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; }
+    .about-text p { margin-bottom: 20px; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat-card { background: rgba(255,255,255,0.05); padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(4, 227, 178, 0.2); transition: all 0.3s ease; }
+    .stat-card:hover { transform: translateY(-5px); border-color: #04e3b2; background: rgba(4, 227, 178, 0.1); }
+    .stat-number { font-size: 2.2rem; font-weight: 700; color: #04e3b2; margin-bottom: 8px; }
+    .stat-label { opacity: 0.8; font-size: 0.9rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+    .service-card { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; text-align: center; }
+    .service-card:hover { transform: translateY(-8px); border-color: rgba(4, 227, 178, 0.3); background: rgba(255,255,255,0.06); }
+    .service-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+    .service-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: #04e3b2; }
+    .service-desc { opacity: 0.8; line-height: 1.6; font-size: 0.95rem; }
+
+    main.content { background: #001826; padding: 64px 56px; color: #fff; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; margin-top: 12px; }
+    .card { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; transition: transform 0.3s ease; }
+    .card:hover { transform: translateY(-5px); }
+    .card img { width:100%; display:block; border-radius: 6px; }
+    footer { padding: 36px 56px; color: rgba(255,255,255,0.65); background: #00101a; }
+
+    @media (max-width:900px) {
+      .headline { font-size: 2rem; }
+      .hero { padding: 20px; }
+      .video-container { width: 95%; height: 70vh; }
+      .hero-section { height: 70vh; }
+      .hero-overlay { left: 20px; bottom: 20px; max-width: calc(100% - 40px); margin-left: 0; padding: 32px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">ABDELRAHMAN ELKHATIB</div>
+    <nav>
+      <a href="#solutions">SOLUTIONS</a>
+      <a href="#work">OUR WORK</a>
+      <a href="#news">NEWS</a>
+      <a href="#team">TEAM</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </header>
+  <div class="spacer"></div>
+
+  <div class="hero" id="heroRoot">
+    <div class="video-container" id="videoContainer">
+
+      <section class="hero-section" data-video="res/video1.mp4" data-kicker="3D & VIDEO PRODUCTION" data-headline="Ready for web, TV and socials" data-desc="Converting technical 3D engineering models and complex comms messages into beautifully crafted " data-highlight="video and image">
+        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
+        <div class="hero-overlay">
+          <div class="kicker overlay-anim">3D & VIDEO PRODUCTION</div>
+          <div class="headline overlay-anim">Ready for web, TV and socials</div>
+          <div class="desc overlay-anim">Converting technical 3D engineering models and complex comms messages into beautifully crafted <b>video and image</b> stories is our bread and butter.</div>
+          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
+        </div>
+      </section>
+
+      <section class="hero-section" data-video="res/video2.mp4" data-kicker="IMMERSIVE DESIGN" data-headline="Virtual and Augmented Reality" data-desc="Bringing concepts to life using interactive 3D spaces that work seamlessly on multiple devices." data-highlight="interactive 3D spaces">
+        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
+        <div class="hero-overlay">
+          <div class="kicker overlay-anim">IMMERSIVE DESIGN</div>
+          <div class="headline overlay-anim">Virtual and Augmented Reality</div>
+          <div class="desc overlay-anim">Bringing concepts to life using interactive 3D spaces that work seamlessly on multiple devices. <b>interactive 3D spaces</b></div>
+          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
+        </div>
+      </section>
+
+      <section class="hero-section" data-video="res/video3.mp4" data-kicker="CREATIVE CONTENT" data-headline="Storytelling that inspires" data-desc="We blend art and technology to create visuals that captivate audiences and communicate complex ideas." data-highlight="art and technology">
+        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
+        <div class="hero-overlay">
+          <div class="kicker overlay-anim">CREATIVE CONTENT</div>
+          <div class="headline overlay-anim">Storytelling that inspires</div>
+          <div class="desc overlay-anim">We blend art and technology to create visuals that captivate audiences and communicate complex ideas. <b>art and technology</b></div>
+          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
+        </div>
+      </section>
+
+      <section class="hero-section" data-video="res/video4.mp4" data-kicker="FUTURE READY" data-headline="Innovations for tomorrow" data-desc="Our work is focused on cutting-edge solutions that transform industries and redefine engagement." data-highlight="cutting-edge solutions">
+        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
+        <div class="hero-overlay">
+          <div class="kicker overlay-anim">FUTURE READY</div>
+          <div class="headline overlay-anim">Innovations for tomorrow</div>
+          <div class="desc overlay-anim">Our work is focused on cutting-edge solutions that transform industries and redefine engagement. <b>cutting-edge solutions</b></div>
+          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
+        </div>
+      </section>
+
+    </div>
+
+    <div class="scroll-arrow" id="scrollArrow">↓</div>
+  </div>
+
+  <section class="about-section" id="about">
+    <div class="about-container">
+      <h2 class="about-title">About Our Company</h2>
+      <p class="about-subtitle">We are a team of creative professionals specializing in advanced visual content production</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>ABDELRAHMAN EL KHATIBis a leading company in 3D visual content production and virtual reality. We combine art and technology to create unforgettable visual experiences that help our clients connect with their audience in new and innovative ways.</p>
+          <p>Since our founding, we have developed hundreds of projects for large corporations and startups, making us the first choice for clients looking for quality and creativity in one package.</p>
+          <p>Our team consists of experienced designers, developers, and creative artists who work together to transform ideas into stunning visual realities.</p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Completed Projects</div></div>
+          <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Happy Clients</div></div>
+          <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Years Experience</div></div>
+          <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label">Awards Won</div></div>
+        </div>
+      </div>
+      <div class="services-grid">
+        <div class="service-card"><div class="service-icon">🎬</div><h3 class="service-title">Video Production</h3><p class="service-desc">Professional high-quality video production for companies and institutions using the latest techniques and equipment.</p></div>
+        <div class="service-card"><div class="service-icon">🎮</div><h3 class="service-title">3D Modeling</h3><p class="service-desc">Design and production of realistic 3D models for products, buildings, and characters.</p></div>
+        <div class="service-card"><div class="service-icon">🥽</div><h3 class="service-title">Virtual Reality</h3><p class="service-desc">Development of interactive virtual and augmented reality experiences for training and marketing.</p></div>
+        <div class="service-card"><div class="service-icon">✨</div><h3 class="service-title">Visual Effects</h3><p class="service-desc">Adding advanced visual effects and animations for films and advertisements.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="content" id="work"><h2 style="font-size:1.4rem; margin-bottom:12px;">Our Work — Gallery</h2><div class="gallery"><div class="card"><img src="res/img1.jpg" alt=""></div><div class="card"><img src="res/img2.jpg" alt=""></div><div class="card"><img src="res/img3.jpg" alt=""></div><div class="card"><img src="res/img4.jpg" alt=""></div><div class="card"><img src="res/img5.jpg" alt=""></div></div></main>
+
+  <footer>© <span id="year"></span> ABDELRAHMAN EL KHATIB— all rights reserved</footer>
+
+  <script>
+    const sections = Array.from(document.querySelectorAll('.hero-section'));
+    const videos = Array.from(document.querySelectorAll('.sectionVideo'));
+    const container = document.getElementById('videoContainer');
+
+    let current = 0;
+    let switching = false;
+    let overlayTimer = null;
+
+    const FADE_MS = 900; // longer cinematic crossfade
+    const OVERLAY_DELAY = 1400; // text appears noticeably after video starts
+
+    // populate each <video> src from data attribute
+    sections.forEach((sec, idx) => {
+      const v = videos[idx];
+      const src = sec.dataset.video;
+      if (v) {
+        v.src = src;
+        v.preload = 'metadata';
+      }
+    });
+
+    // IntersectionObserver: when a section is centered enough -> make it active
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const idx = sections.indexOf(entry.target);
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+          activate(idx);
+        }
+      });
+    }, { root: container, threshold: [0.6] });
+
+    sections.forEach(s => io.observe(s));
+
+    function clearOverlay(section) {
+      if (!section) return;
+      const animEls = section.querySelectorAll('.overlay-anim');
+      animEls.forEach(el => el.classList.remove('show'));
+      section.classList.remove('show-overlay');
+    }
+
+    function activate(idx) {
+      if (idx === current || switching) return;
+      switching = true;
+
+      const prevVideo = videos[current];
+      const prevSection = sections[current];
+
+      // Prepare next
+      const nextVideo = videos[idx];
+      const nextSection = sections[idx];
+
+      // clear previous overlays immediately
+      clearTimeout(overlayTimer);
+      clearOverlay(prevSection);
+      clearOverlay(nextSection);
+
+      // play next video and crossfade
+      if (nextVideo) {
+        try { nextVideo.currentTime = 0; } catch(e) {}
+        nextVideo.muted = true; // keep muted until user interacts
+        nextVideo.style.zIndex = 3; // bring above prev
+        // start playing
+        const p = nextVideo.play();
+        if (p !== undefined) p.catch(()=>{});
+        // make it visible (fade in)
+        // add visible after a tiny delay to let decoding start for smoother fade
+        nextVideo.classList.add('visible');
+      }
+
+      // fade out previous but keep it visible during overlap for cinematic crossfade
+      if (prevVideo) {
+        prevVideo.classList.remove('visible');
+        // pause and reset after fade completes
+        setTimeout(() => {
+          try { prevVideo.pause(); prevVideo.currentTime = 0; } catch(e) {}
+          prevVideo.style.zIndex = '';
+        }, FADE_MS + 200);
+      }
+
+      // handle section active class for overlay positioning (we keep same placement)
+      if (prevSection) prevSection.classList.remove('active');
+      if (nextSection) nextSection.classList.add('active');
+
+      // show overlay after a longer delay to make it feel like it appears after video
+      overlayTimer = setTimeout(() => {
+        if (!nextSection) return;
+        nextSection.classList.add('show-overlay');
+        const animEls = nextSection.querySelectorAll('.overlay-anim');
+        animEls.forEach((el, i) => setTimeout(() => el.classList.add('show'), 100 * i));
+      }, OVERLAY_DELAY);
+
+      // finish switching
+      setTimeout(() => {
+        current = idx;
+        if (nextVideo) nextVideo.style.zIndex = '';
+        switching = false;
+      }, FADE_MS + 220);
+    }
+
+    // initial activation
+    if (sections.length > 0) {
+      const firstVideo = videos[0];
+      const firstSection = sections[0];
+      if (firstSection) firstSection.classList.add('active');
+      if (firstVideo) {
+        firstVideo.muted = true;
+        firstVideo.play().catch(()=>{});
+        setTimeout(() => firstVideo.classList.add('visible'), 80);
+        overlayTimer = setTimeout(() => {
+          firstSection.classList.add('show-overlay');
+          const animEls = firstSection.querySelectorAll('.overlay-anim');
+          animEls.forEach((el, i) => setTimeout(() => el.classList.add('show'), 100 * i));
+        }, OVERLAY_DELAY);
+      }
+    }
+
+    // scroll arrow moves to next section center
+    document.getElementById('scrollArrow').addEventListener('click', () => {
+      const next = Math.min(sections.length - 1, current + 1);
+      sections[next].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // unmute on first interaction (only visible video)
+    let firstInteractionDone = false;
+    function enableSoundOnFirstInteraction() {
+      if (firstInteractionDone) return;
+      firstInteractionDone = true;
+      const v = videos[current];
+      if (v) { v.muted = false; v.volume = 0.9; }
+      window.removeEventListener('wheel', enableSoundOnFirstInteraction);
+      window.removeEventListener('touchstart', enableSoundOnFirstInteraction);
+      window.removeEventListener('click', enableSoundOnFirstInteraction);
+      window.removeEventListener('keydown', enableSoundOnFirstInteraction);
+    }
+    window.addEventListener('wheel', enableSoundOnFirstInteraction, {passive:true});
+    window.addEventListener('touchstart', enableSoundOnFirstInteraction, {passive:true});
+    window.addEventListener('click', enableSoundOnFirstInteraction, {passive:true});
+    window.addEventListener('keydown', enableSoundOnFirstInteraction, {passive:true});
+
+    // keyboard support
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key === 'ArrowDown') {
+        const next = Math.min(sections.length - 1, current + 1);
+        sections[next].scrollIntoView({behavior:'smooth', block: 'center'});
+      } else if (ev.key === 'ArrowUp') {
+        const prev = Math.max(0, current - 1);
+        sections[prev].scrollIntoView({behavior:'smooth', block: 'center'});
+      }
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+  </script>
+
+
+</body>
+</html>
 

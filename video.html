@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spatial Media — Video Hero</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    html, body { 
+      height: 100%; 
+    }
+    
+    body {
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial;
+      background: #002c40;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-y: auto;
+    }
+
+    /* Fixed video hero section */
+    .video-hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #002c40;
+      z-index: 1;
+    }
+
+    /* Video container - wider like reference */
+    .video-container {
+      position: relative;
+      width: 92%;
+      max-width: 1300px;
+      height: 85vh;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    }
+
+    /* Main video element with shorter transition */
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      background: #000;
+      opacity: 1;
+      transition: opacity 0.3s ease; /* Much shorter transition */
+    }
+
+    .hero-video.fade-out {
+      opacity: 0;
+    }
+
+    /* Text overlay positioned like reference */
+    .text-overlay {
+      position: absolute;
+      bottom: 45px;
+      left: 45px;
+      max-width: 650px;
+      z-index: 10;
+      color: #fff;
+    }
+
+    /* Text elements - start hidden */
+    .category {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s ease;
+    }
+
+    .main-title {
+      font-size: 3.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s ease;
+    }
+
+    .description {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.95);
+      text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.7s ease;
+    }
+
+    .highlight {
+      color: #04e3b2;
+      font-weight: 600;
+    }
+
+    .continue-btn {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 24px;
+      padding: 10px 24px;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 25px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .continue-btn:hover {
+      background: rgba(4,227,178,0.2);
+      border-color: #04e3b2;
+      transform: translateY(-2px);
+    }
+
+    .continue-btn::after {
+      content: "↓";
+      margin-left: 8px;
+      font-size: 1rem;
+    }
+
+    /* Show states for text animation */
+    .category.show,
+    .main-title.show,
+    .description.show,
+    .continue-btn.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scroll sections for detection */
+    .scroll-section {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .video-container {
+        width: 96%;
+        height: 80vh;
+      }
+      
+      .text-overlay {
+        bottom: 30px;
+        left: 30px;
+        right: 30px;
+        max-width: none;
+      }
+      
+      .main-title {
+        font-size: 2.5rem;
+      }
+      
+      .description {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .text-overlay {
+        bottom: 25px;
+        left: 20px;
+        right: 20px;
+      }
+      
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .category {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed video hero -->
+  <div class="video-hero">
+    <div class="video-container">
+      <!-- Main video -->
+      <video 
+        id="heroVideo" 
+        class="hero-video"
+        muted 
+        loop 
+        playsinline 
+        webkit-playsinline
+        preload="auto">
+      </video>
+      
+      <!-- Text overlay -->
+      <div class="text-overlay">
+        <div class="category" id="category">3D & VIDEO PRODUCTION</div>
+        <h1 class="main-title" id="mainTitle">Ready for web, TV and socials</h1>
+        <p class="description" id="description">
+          Converting technical 3D engineering models and complex comms messages into beautifully crafted 
+          <span class="highlight" id="highlight">video and image</span> stories is our bread and butter.
+        </p>
+        <a href="#" class="continue-btn" id="continueBtn">Continue</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invisible scroll sections for detection -->
+  <div class="scroll-section" data-video="res/video1.mp4" 
+       data-category="3D & VIDEO PRODUCTION"
+       data-title="Ready for web, TV and socials"
+       data-description="Converting technical 3D engineering models and complex comms messages into beautifully crafted "
+       data-highlight="video and image"></div>
+
+  <div class="scroll-section" data-video="res/video2.mp4"
+       data-category="IMMERSIVE DESIGN"
+       data-title="Virtual and Augmented Reality"
+       data-description="Bringing concepts to life using interactive 3D spaces that work seamlessly on "
+       data-highlight="multiple platforms"></div>
+
+  <div class="scroll-section" data-video="res/video3.mp4"
+       data-category="CREATIVE CONTENT"
+       data-title="Storytelling that inspires"
+       data-description="We blend art and technology to create visuals that captivate audiences and communicate "
+       data-highlight="complex ideas"></div>
+
+  <div class="scroll-section" data-video="res/video4.mp4"
+       data-category="FUTURE READY"
+       data-title="Innovations for tomorrow"
+       data-description="Our work is focused on cutting-edge solutions that transform industries and redefine "
+       data-highlight="digital engagement"></div>
+
+  <script>
+    // Elements
+    const videoEl = document.getElementById('heroVideo');
+    const categoryEl = document.getElementById('category');
+    const titleEl = document.getElementById('mainTitle');
+    const descEl = document.getElementById('description');
+    const highlightEl = document.getElementById('highlight');
+    const btnEl = document.getElementById('continueBtn');
+    const sections = document.querySelectorAll('.scroll-section');
+
+    // State
+    let currentIndex = 0;
+    let isTransitioning = false;
+    let textShowTimeout = null;
+    let isScrolling = false;
+
+    // Text elements array
+    const textElements = [categoryEl, titleEl, descEl, btnEl];
+
+    // Disable default scrolling and use custom scroll behavior
+    let scrollTimeout;
+    function handleCustomScroll(event) {
+      if (isTransitioning) {
+        event.preventDefault();
+        return;
+      }
+
+      // Prevent rapid scrolling
+      if (isScrolling) {
+        event.preventDefault();
+        return;
+      }
+
+      const delta = event.deltaY;
+      if (Math.abs(delta) < 10) return; // Ignore tiny scroll movements
+
+      event.preventDefault();
+      isScrolling = true;
+
+      // Clear any existing timeout
+      clearTimeout(scrollTimeout);
+
+      // Determine scroll direction
+      if (delta > 0) {
+        // Scrolling down
+        const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+        if (nextIndex !== currentIndex) {
+          updateSection(nextIndex);
+          // Scroll to that section smoothly
+          sections[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // Scrolling up
+        const prevIndex = Math.max(0, currentIndex - 1);
+        if (prevIndex !== currentIndex) {
+          updateSection(prevIndex);
+          // Scroll to that section smoothly
+          sections[prevIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // Reset scrolling flag after delay
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 800);
+    }
+
+    // Add custom scroll handler
+    window.addEventListener('wheel', handleCustomScroll, { passive: false });
+
+    // Hide all text immediately
+    function hideText() {
+      if (textShowTimeout) {
+        clearTimeout(textShowTimeout);
+        textShowTimeout = null;
+      }
+      textElements.forEach(el => {
+        el.classList.remove('show');
+      });
+    }
+
+    // Show text with delay
+    function showText(delay = 1000) {
+      if (textShowTimeout) {
+        clearTimeout(textShowTimeout);
+      }
+      
+      textShowTimeout = setTimeout(() => {
+        textElements.forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.add('show');
+          }, i * 150);
+        });
+      }, delay);
+    }
+
+    // Preload video to avoid black screen - improved version
+    function preloadVideo(src) {
+      return new Promise((resolve) => {
+        const video = document.createElement('video');
+        video.src = src;
+        video.preload = 'auto';
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        
+        const handleReady = () => {
+          video.removeEventListener('loadeddata', handleReady);
+          video.removeEventListener('canplaythrough', handleReady);
+          resolve(video);
+        };
+        
+        video.addEventListener('loadeddata', handleReady);
+        video.addEventListener('canplaythrough', handleReady);
+        
+        // Fallback after timeout
+        setTimeout(() => {
+          resolve(video);
+        }, 2000);
+        
+        video.load();
+      });
+    }
+
+    // Update content and video with seamless switching
+    async function updateSection(index) {
+      if (index === currentIndex || isTransitioning || index < 0 || index >= sections.length) return;
+      
+      isTransitioning = true;
+      const oldIndex = currentIndex;
+      currentIndex = index;
+      
+      const section = sections[index];
+      const videoSrc = section.dataset.video;
+      const category = section.dataset.category;
+      const title = section.dataset.title;
+      const description = section.dataset.description;
+      const highlight = section.dataset.highlight;
+
+      // Hide text immediately
+      hideText();
+
+      try {
+        // Preload new video completely
+        const preloadedVideo = await preloadVideo(videoSrc);
+        
+        // Very brief fade for seamless transition
+        videoEl.classList.add('fade-out');
+
+        setTimeout(() => {
+          // Update text content
+          categoryEl.textContent = category;
+          titleEl.textContent = title;
+          descEl.innerHTML = description + '<span class="highlight">' + highlight + '</span> stories is our bread and butter.';
+
+          // Update video source - it's already preloaded so should be instant
+          videoEl.src = videoSrc;
+          videoEl.load();
+
+          // Play and remove fade immediately since video is ready
+          videoEl.play().then(() => {
+            videoEl.classList.remove('fade-out');
+            isTransitioning = false;
+            showText(1000);
+          }).catch(() => {
+            videoEl.classList.remove('fade-out');
+            isTransitioning = false;
+            showText(1000);
+          });
+          
+          // Clean up preload element
+          preloadedVideo.remove();
+        }, 100); // Much shorter delay since video is preloaded
+        
+      } catch (error) {
+        console.warn('Video preload failed, using direct switch:', error);
+        // Fallback to immediate switch
+        videoEl.src = videoSrc;
+        videoEl.load();
+        categoryEl.textContent = category;
+        titleEl.textContent = title;
+        descEl.innerHTML = description + '<span class="highlight">' + highlight + '</span> stories is our bread and butter.';
+        
+        videoEl.play().then(() => {
+          videoEl.classList.remove('fade-out');
+          isTransitioning = false;
+          showText(1000);
+        }).catch(() => {
+          videoEl.classList.remove('fade-out');
+          isTransitioning = false;
+          showText(1000);
+        });
+      }
+    }
+
+    // Intersection Observer for scroll detection - much more sensitive
+    const observerOptions = {
+      root: null,
+      threshold: [0.1, 0.3, 0.5, 0.7, 0.9], // Multiple thresholds for better detection
+      rootMargin: '-10% 0px -10% 0px' // Smaller margin for faster detection
+    };
+
+    let lastDetectedIndex = -1;
+    const observer = new IntersectionObserver((entries) => {
+      // Find the most intersecting entry
+      let mostVisible = null;
+      let maxRatio = 0;
+      
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          mostVisible = entry;
+        }
+      });
+      
+      if (mostVisible) {
+        const index = Array.from(sections).indexOf(mostVisible.target);
+        if (index !== -1 && index !== lastDetectedIndex) {
+          lastDetectedIndex = index;
+          updateSection(index);
+        }
+      }
+    }, observerOptions);
+
+    // Observe all sections
+    sections.forEach(section => observer.observe(section));
+
+    // Initialize first video with better preloading
+    async function init() {
+      const firstSection = sections[0];
+      const firstVideoSrc = firstSection.dataset.video;
+      
+      try {
+        // Preload and prepare first video completely
+        const preloadedVideo = await preloadVideo(firstVideoSrc);
+        
+        videoEl.src = firstVideoSrc;
+        videoEl.loop = true;
+        videoEl.load();
+        
+        try {
+          await videoEl.play();
+          showText(1500);
+        } catch (error) {
+          console.warn('Initial video play blocked:', error);
+          showText(1500);
+        }
+        
+        // Clean up preload element
+        preloadedVideo.remove();
+        
+        // Preload next videos in background for smoother transitions
+        preloadAllVideos();
+        
+      } catch (error) {
+        console.warn('Initial video setup failed:', error);
+        videoEl.src = firstVideoSrc;
+        videoEl.load();
+        videoEl.play().catch(() => {});
+        showText(1500);
+      }
+    }
+
+    // Preload all videos for ultra-smooth transitions
+    function preloadAllVideos() {
+      sections.forEach((section, index) => {
+        if (index === 0) return; // Skip first video, already loaded
+        
+        setTimeout(() => {
+          const video = document.createElement('video');
+          video.src = section.dataset.video;
+          video.preload = 'auto';
+          video.muted = true;
+          video.load();
+          
+          // Keep reference for cleanup later
+          setTimeout(() => video.remove(), 10000);
+        }, index * 1000);
+      });
+    }
+
+    // Enable sound on user interaction
+    let soundEnabled = false;
+    function enableSound() {
+      if (soundEnabled) return;
+      soundEnabled = true;
+      videoEl.muted = false;
+      videoEl.volume = 0.6;
+    }
+
+    ['click', 'touchstart', 'wheel'].forEach(event => {
+      document.addEventListener(event, enableSound, { once: true, passive: true });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+        sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = Math.max(0, currentIndex - 1);
+        sections[prevIndex].scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Continue button scroll to next
+    btnEl.addEventListener('click', (e) => {
+      e.preventDefault();
+      const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+      sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Initialize when page loads
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>

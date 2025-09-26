@@ -12,22 +12,167 @@
     html,body { height:100%; }
     body {
       font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:  linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);;
+      background:  linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
       color: #fff;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       overflow-y: auto;
     }
 
-    header { position: fixed; top:0; left:0; right:0; height:72px; display:flex; align-items:center; justify-content:space-between; padding: 0 48px; background: rgba(0,44,64,0.92); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 9999; }
-    .logo { font-weight: 700; letter-spacing: 1.6px; color: #ffffff; font-size: 1.05rem; }
+    header { 
+      position: fixed; 
+      top:0; 
+      left:0; 
+      right:0; 
+      height:72px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      padding: 0 48px; 
+      background: rgba(0,44,64,0.15); 
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1); 
+      z-index: 9999; 
+    }
+    
+    .logo { 
+      display: flex; 
+      align-items: center; 
+      font-weight: 700; 
+      letter-spacing: 1.6px; 
+      color: #ffffff; 
+      font-size: 1.05rem; 
+    }
+    .logo img { 
+      height: 40px; 
+      width: 40px;
+      border-radius: 50%;
+      border: 2px solid #04e3b2;
+      object-fit: cover;
+      margin-right: 12px; 
+    }
+    
     nav a { color: #fff; text-decoration: none; margin-left: 28px; opacity: 0.9; font-weight: 500; font-size: 0.95rem; }
     nav a:hover { color: #04e3b2; }
     .spacer { height: 72px; }
 
-    .hero { position: relative; width: 100%; height: 80vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #001826; }
+    .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #001826; }
 
-    .video-container { position: relative; width: 90%; max-width: 1200px; height: 70vh; border-radius: 15px; overflow-y: auto; overflow-x: hidden; box-shadow: 0 20px 60px  #011a28; scroll-behavior: smooth; scroll-snap-type: y mandatory; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+    /* Initial Hero Content (before scroll) */
+    .hero-initial {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      background: linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .hero-initial.hide {
+      opacity: 0;
+      transform: translateY(-50px);
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      max-width: 900px;
+      padding: 0 2rem;
+    }
+
+    .hero-title .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.8s ease forwards;
+    }
+
+    .hero-title .word:nth-child(1) { animation-delay: 0.2s; }
+    .hero-title .word:nth-child(2) { animation-delay: 0.5s; color: #04e3b2; }
+    .hero-title .word:nth-child(3) { animation-delay: 0.8s; }
+    .hero-title .word:nth-child(4) { animation-delay: 1.1s; color: #04e3b2; }
+    .hero-title .word:nth-child(5) { animation-delay: 1.4s; }
+
+    @keyframes slideUpFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .scroll-instruction {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      letter-spacing: 2px;
+      font-weight: 500;
+      opacity: 0;
+      animation: slideUpFade 0.8s ease forwards;
+      animation-delay: 2s;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .scroll-instruction:hover {
+      color: #04e3b2;
+    }
+
+    .scroll-instruction::after {
+      content: '↓';
+      display: block;
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+      animation: bounce 2s infinite;
+      animation-delay: 3s;
+    }
+
+    .video-container { 
+      position: relative; 
+      width: 100%; 
+      max-width: none; 
+      height: 100vh; 
+      border-radius: 0; 
+      overflow-y: auto; 
+      overflow-x: hidden; 
+      box-shadow: none; 
+      scroll-behavior: smooth; 
+      scroll-snap-type: y mandatory; 
+      overscroll-behavior: contain; 
+      -webkit-overflow-scrolling: touch;
+      transform: translateY(100vh);
+      opacity: 0;
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+    }
+
+    .video-container.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Completely hide scrollbar */
+    .video-container::-webkit-scrollbar { 
+      display: none; 
+      width: 0 !important; 
+    }
+    .video-container { 
+      -ms-overflow-style: none; 
+      scrollbar-width: none; 
+    }
+    .video-container * {
+      scrollbar-width: none;
+    }
 
     /* each section fills the container so only one is visible at a time */
     .hero-section { height: 100%; width: 100%; position: relative; flex-shrink: 0; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
@@ -55,11 +200,6 @@
 
     .scroll-arrow { position: absolute; right: 28px; bottom: 20px; z-index: 20; font-size: 1.4rem; opacity: 0.78; cursor: pointer; user-select: none; animation: bounce 1.6s infinite; color: #fff; }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-    .video-container::-webkit-scrollbar { width: 8px; }
-    .video-container::-webkit-scrollbar-track { background: #001826; border-radius: 4px; }
-    .video-container::-webkit-scrollbar-thumb { background: #001826; border-radius: 4px; }
-    .video-container::-webkit-scrollbar-thumb:hover { background: #001826; }
 
     /* rest of page styles unchanged */
     .about-section { background: linear-gradient(135deg, #001826, #002235); padding: 80px 56px; position: relative; }
@@ -90,21 +230,34 @@
 
     @media (max-width:900px) {
       .headline { font-size: 2rem; }
-      .hero { padding: 20px; }
-      .video-container { width: 95%; height: 70vh; }
-      .hero-section { height: 70vh; }
+      .hero { padding: 20px; height: 100vh; }
+      .video-container { width: 100%; height: 100vh; }
+      .hero-section { height: 100vh; }
       .hero-overlay { left: 20px; bottom: 20px; max-width: calc(100% - 40px); margin-left: 0; padding: 32px; }
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .about-stats { grid-template-columns: repeat(2, 1fr); }
       .services-grid { grid-template-columns: 1fr; }
       .about-title { font-size: 2.2rem; }
+      
+      .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .scroll-instruction {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">ABDELRAHMAN ELKHATIB</div>
+    <div class="logo">
+      <img src="logo.png" alt="Logo">
+      ABDELRAHMAN ELKHATIB
+    </div>
     <nav>
       <a href="#solutions">SOLUTIONS</a>
       <a href="#work">OUR WORK</a>
@@ -116,48 +269,27 @@
   <div class="spacer"></div>
 
   <div class="hero" id="heroRoot">
+    <!-- Initial Hero Content -->
+    <div class="hero-initial" id="heroInitial">
+      <h1 class="hero-title">
+        <span class="word">From</span>
+        <span class="word">Idea</span>
+        <span class="word">to</span>
+        <span class="word">Immersive</span>
+        <span class="word">Reality</span>
+      </h1>
+      <p class="scroll-instruction" id="scrollInstruction">SCROLL DOWN TO CONTINUE</p>
+    </div>
+
     <div class="video-container" id="videoContainer">
-
-      <section class="hero-section" data-video="res/video1.mp4" data-kicker="3D & VIDEO PRODUCTION" data-headline="Ready for web, TV and socials" data-desc="Converting technical 3D engineering models and complex comms messages into beautifully crafted " data-highlight="video and image">
-        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
-        <div class="hero-overlay">
-          <div class="kicker overlay-anim">3D & VIDEO PRODUCTION</div>
-          <div class="headline overlay-anim">Ready for web, TV and socials</div>
-          <div class="desc overlay-anim">Converting technical 3D engineering models and complex comms messages into beautifully crafted <b>video and image</b> stories is our bread and butter.</div>
-          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
-        </div>
-      </section>
-
-      <section class="hero-section" data-video="res/video2.mp4" data-kicker="IMMERSIVE DESIGN" data-headline="Virtual and Augmented Reality" data-desc="Bringing concepts to life using interactive 3D spaces that work seamlessly on multiple devices." data-highlight="interactive 3D spaces">
-        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
-        <div class="hero-overlay">
-          <div class="kicker overlay-anim">IMMERSIVE DESIGN</div>
-          <div class="headline overlay-anim">Virtual and Augmented Reality</div>
-          <div class="desc overlay-anim">Bringing concepts to life using interactive 3D spaces that work seamlessly on multiple devices. <b>interactive 3D spaces</b></div>
-          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
-        </div>
-      </section>
-
-      <section class="hero-section" data-video="res/video3.mp4" data-kicker="CREATIVE CONTENT" data-headline="Storytelling that inspires" data-desc="We blend art and technology to create visuals that captivate audiences and communicate complex ideas." data-highlight="art and technology">
-        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
-        <div class="hero-overlay">
-          <div class="kicker overlay-anim">CREATIVE CONTENT</div>
-          <div class="headline overlay-anim">Storytelling that inspires</div>
-          <div class="desc overlay-anim">We blend art and technology to create visuals that captivate audiences and communicate complex ideas. <b>art and technology</b></div>
-          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
-        </div>
-      </section>
-
-      <section class="hero-section" data-video="res/video4.mp4" data-kicker="FUTURE READY" data-headline="Innovations for tomorrow" data-desc="Our work is focused on cutting-edge solutions that transform industries and redefine engagement." data-highlight="cutting-edge solutions">
-        <video class="sectionVideo" muted preload="metadata" playsinline webkit-playsinline loop></video>
-        <div class="hero-overlay">
-          <div class="kicker overlay-anim">FUTURE READY</div>
-          <div class="headline overlay-anim">Innovations for tomorrow</div>
-          <div class="desc overlay-anim">Our work is focused on cutting-edge solutions that transform industries and redefine engagement. <b>cutting-edge solutions</b></div>
-          <!-- <div class="cta overlay-anim" style="margin-top:16px;"><a class="btn" href="#about">CONTINUE</a></div> -->
-        </div>
-      </section>
-
+      <!-- REPLACED: iframe that loads vidd.html (page with the stacked videos) -->
+      <iframe
+        id="videoFrame"
+        src="video.html"
+        title="Video feed"
+        allow="autoplay; fullscreen"
+        style="width:100%; height:100%; border:0; display:block;">
+      </iframe>
     </div>
 
     <div class="scroll-arrow" id="scrollArrow">↓</div>
@@ -169,7 +301,7 @@
       <p class="about-subtitle">We are a team of creative professionals specializing in advanced visual content production</p>
       <div class="about-grid">
         <div class="about-text">
-          <p>ABDELRAHMAN EL KHATIBis a leading company in 3D visual content production and virtual reality. We combine art and technology to create unforgettable visual experiences that help our clients connect with their audience in new and innovative ways.</p>
+          <p>ABDELRAHMAN EL KHATIB is a leading company in 3D visual content production and virtual reality. We combine art and technology to create unforgettable visual experiences that help our clients connect with their audience in new and innovative ways.</p>
           <p>Since our founding, we have developed hundreds of projects for large corporations and startups, making us the first choice for clients looking for quality and creativity in one package.</p>
           <p>Our team consists of experienced designers, developers, and creative artists who work together to transform ideas into stunning visual realities.</p>
         </div>
@@ -310,10 +442,48 @@
       }
     }
 
-    // scroll arrow moves to next section center
+    let hasScrolledOnce = false;
+    const heroInitial = document.getElementById('heroInitial');
+    const scrollInstruction = document.getElementById('scrollInstruction');
+
+    // Show video container on first scroll
+    function handleFirstScroll() {
+      if (!hasScrolledOnce) {
+        hasScrolledOnce = true;
+        
+        // Hide initial hero content
+        heroInitial.classList.add('hide');
+        
+        // Show video container after a short delay
+        setTimeout(() => {
+          container.classList.add('show');
+        }, 500);
+        
+        // Remove scroll listeners after first scroll
+        window.removeEventListener('wheel', handleFirstScroll);
+        window.removeEventListener('touchstart', handleFirstScroll);
+        scrollInstruction.removeEventListener('click', handleFirstScroll);
+      }
+    }
+
+    // Add scroll listeners for first interaction
+    window.addEventListener('wheel', handleFirstScroll, { passive: true });
+    window.addEventListener('touchstart', handleFirstScroll, { passive: true });
+    
+    // Add click listener to scroll instruction
+    scrollInstruction.addEventListener('click', handleFirstScroll);
+
+    // send message to iframe to scroll to next section
     document.getElementById('scrollArrow').addEventListener('click', () => {
-      const next = Math.min(sections.length - 1, current + 1);
-      sections[next].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (!hasScrolledOnce) {
+        handleFirstScroll();
+      }
+      
+      // send message to iframe to scroll to next section
+      const iframe = document.getElementById('videoFrame');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ action: 'scrollNext' }, '*');
+      }
     });
 
     // unmute on first interaction (only visible video)
@@ -333,14 +503,20 @@
     window.addEventListener('click', enableSoundOnFirstInteraction, {passive:true});
     window.addEventListener('keydown', enableSoundOnFirstInteraction, {passive:true});
 
-    // keyboard support
+    // keyboard support - show container first if needed, then send to iframe
     window.addEventListener('keydown', (ev) => {
-      if (ev.key === 'ArrowDown') {
-        const next = Math.min(sections.length - 1, current + 1);
-        sections[next].scrollIntoView({behavior:'smooth', block: 'center'});
-      } else if (ev.key === 'ArrowUp') {
-        const prev = Math.max(0, current - 1);
-        sections[prev].scrollIntoView({behavior:'smooth', block: 'center'});
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+        if (!hasScrolledOnce) {
+          handleFirstScroll();
+        }
+        
+        const iframe = document.getElementById('videoFrame');
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({ 
+            action: 'keydown', 
+            key: ev.key 
+          }, '*');
+        }
       }
     });
 
@@ -348,7 +524,5 @@
 
   </script>
 
-
 </body>
 </html>
-

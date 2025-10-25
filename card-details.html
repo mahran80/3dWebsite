@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Details - 3DXENON</title>
+  
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/card-details.css">
+</head>
+<body>
+
+  <!-- Header/Navigation -->
+  <header class="detail-header">
+    <div class="detail-nav">
+      <a href="index.html#case" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Gallery
+      </a>
+      <div class="logo">3DXENON</div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Image -->
+  <section class="detail-hero">
+    <div class="detail-hero-image">
+      <img id="heroImage" src="" alt="">
+      <div class="detail-hero-overlay"></div>
+    </div>
+    <div class="detail-hero-content">
+      <div class="detail-category" id="detailCategory"></div>
+      <h1 class="detail-title" id="detailTitle"></h1>
+    </div>
+  </section>
+
+  <!-- Project Info Section -->
+  <section class="project-info">
+    <div class="project-info-container">
+      
+      <!-- Main Content -->
+      <div class="project-main">
+        
+        <!-- Overview -->
+        <div class="content-block">
+          <h2 class="block-title">Project Overview</h2>
+          <p class="block-text" id="detailOverview"></p>
+        </div>
+
+        <!-- Challenge -->
+        <div class="content-block">
+          <h2 class="block-title">The Challenge</h2>
+          <p class="block-text" id="detailChallenge"></p>
+        </div>
+
+        <!-- Solution -->
+        <div class="content-block">
+          <h2 class="block-title">Our Solution</h2>
+          <p class="block-text" id="detailSolution"></p>
+        </div>
+
+        <!-- Results -->
+        <div class="content-block">
+          <h2 class="block-title">Results & Impact</h2>
+          <p class="block-text" id="detailResults"></p>
+        </div>
+
+        <!-- Image Gallery -->
+        <div class="content-block">
+          <h2 class="block-title">Project Gallery</h2>
+          <div class="detail-gallery" id="detailGallery">
+            <!-- Images will be added dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="project-sidebar">
+        
+        <!-- Services -->
+        <div class="sidebar-card">
+          <h3 class="sidebar-title">Services Provided</h3>
+          <ul class="services-list" id="detailServices">
+            <!-- Services will be added dynamically -->
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="sidebar-card sidebar-cta">
+          <h3 class="sidebar-title">Interested in Similar Project?</h3>
+          <p class="sidebar-text">Let's discuss how we can bring your vision to life.</p>
+          <a href="contact.html" class="cta-btn">
+            Get in Touch
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Related Projects -->
+  <section class="related-projects">
+    <div class="related-container">
+      <h2 class="related-title">Other Services</h2>
+      <div class="related-grid" id="relatedProjects">
+        <!-- Related projects will be added dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="detail-footer">
+    <div class="footer-content">
+      <p>© 2025 3DXENON — all rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="script/card-details.js"></script>
+</body>
+</html>

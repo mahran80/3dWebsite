@@ -1,275 +1,49 @@
+<!-- Role: Main HTML file for the 3DXENON landing page. Contains site structure, metadata, styles/scripts links, and main site sections (hero, services, about, clients, case studies, footer). Do not change code — only comments added above each logical block to explain purpose. -->
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+  <!-- Role: Document metadata and responsive viewport settings. -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ABDELRAHMAN EL KHATIB— Video Feed</title>
+  
+  <!-- Role: Page title shown in browser tab and search results. -->
+  <title>3DXENON— Video Feed</title>
 
+  <!-- Role: Load web font (Roboto). Improves typography consistency across devices. -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
-    html,body { height:100%; }
-    body {
-      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:  linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
-      color: #fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      overflow-y: auto;
-    }
+  <!-- Role: Link to external stylesheet that contains all visual styles for the page. -->
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- Role: Link to external JavaScript file; 'defer' ensures it runs after HTML parsing. This file likely contains UI interactions, animations, and event handlers. -->
+  <script src="script/script.js" defer></script>
 
-    header { 
-      position: fixed; 
-      top:0; 
-      left:0; 
-      right:0; 
-      height:72px; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
-      padding: 0 48px; 
-      background: rgba(0,44,64,0.15); 
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1); 
-      z-index: 9999; 
-    }
-    
-    .logo { 
-      display: flex; 
-      align-items: center; 
-      font-weight: 700; 
-      letter-spacing: 1.6px; 
-      color: #ffffff; 
-      font-size: 1.05rem; 
-    }
-    .logo img { 
-      height: 40px; 
-      width: 40px;
-      border-radius: 50%;
-      border: 2px solid #04e3b2;
-      object-fit: cover;
-      margin-right: 12px; 
-    }
-    
-    nav a { color: #fff; text-decoration: none; margin-left: 28px; opacity: 0.9; font-weight: 500; font-size: 0.95rem; }
-    nav a:hover { color: #04e3b2; }
-    .spacer { height: 72px; }
-
-    .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #001826; }
-
-    /* Initial Hero Content (before scroll) */
-    .hero-initial {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      background: linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .hero-initial.hide {
-      opacity: 0;
-      transform: translateY(-50px);
-      pointer-events: none;
-    }
-
-    .hero-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-align: center;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-      max-width: 900px;
-      padding: 0 2rem;
-    }
-
-    .hero-title .word {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideUpFade 0.8s ease forwards;
-    }
-
-    .hero-title .word:nth-child(1) { animation-delay: 0.2s; }
-    .hero-title .word:nth-child(2) { animation-delay: 0.5s; color: #04e3b2; }
-    .hero-title .word:nth-child(3) { animation-delay: 0.8s; }
-    .hero-title .word:nth-child(4) { animation-delay: 1.1s; color: #04e3b2; }
-    .hero-title .word:nth-child(5) { animation-delay: 1.4s; }
-
-    @keyframes slideUpFade {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .scroll-instruction {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.8);
-      text-align: center;
-      letter-spacing: 2px;
-      font-weight: 500;
-      opacity: 0;
-      animation: slideUpFade 0.8s ease forwards;
-      animation-delay: 2s;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .scroll-instruction:hover {
-      color: #04e3b2;
-    }
-
-    .scroll-instruction::after {
-      content: '↓';
-      display: block;
-      font-size: 1.5rem;
-      margin-top: 0.5rem;
-      animation: bounce 2s infinite;
-      animation-delay: 3s;
-    }
-
-    .video-container { 
-      position: relative; 
-      width: 100%; 
-      max-width: none; 
-      height: 100vh; 
-      border-radius: 0; 
-      overflow-y: auto; 
-      overflow-x: hidden; 
-      box-shadow: none; 
-      scroll-behavior: smooth; 
-      scroll-snap-type: y mandatory; 
-      overscroll-behavior: contain; 
-      -webkit-overflow-scrolling: touch;
-      transform: translateY(100vh);
-      opacity: 0;
-      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
-    }
-
-    .video-container.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    /* Completely hide scrollbar */
-    .video-container::-webkit-scrollbar { 
-      display: none; 
-      width: 0 !important; 
-    }
-    .video-container { 
-      -ms-overflow-style: none; 
-      scrollbar-width: none; 
-    }
-    .video-container * {
-      scrollbar-width: none;
-    }
-
-    /* each section fills the container so only one is visible at a time */
-    .hero-section { height: 100%; width: 100%; position: relative; flex-shrink: 0; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
-
-    /* each section has its own video element positioned absolutely to perfectly overlap */
-    .sectionVideo { position: absolute; top:0; left:0; width:100%; height:100%; /* keep aspect ratio without cropping */ object-fit:fill; object-position: center center; background: #001826; display: block; opacity: 0; transition: opacity 900ms ease; z-index: 1; }
-    .sectionVideo.visible { opacity: 1; }
-
-    /* overlay text (per section) - hidden until section active with delayed appearance */
-    .hero-overlay { position: absolute; z-index:20; max-width: 860px; padding: 28px 30px; text-align: left; bottom: 2px; left: 28px; color: #ffffff; font-weight: 1200;pointer-events: none; opacity: 0; transform: translateY(12px); transition: opacity 420ms ease, transform 420ms ease;text-shadow: 0 8px 24px rgba(0,0,0,0.8); }
-    .hero-section.show-overlay .hero-overlay { opacity: 1; transform: translateY(0); }
-
-    .kicker { font-size: 0.85rem; letter-spacing: 2.4px; opacity: 2; margin-bottom:8px; }
-    .headline { font-size: 2.2rem; line-height: 1.03; font-weight: 700; margin-bottom:8px; letter-spacing: -0.6px; }
-    .desc { font-size: 1rem; opacity:2; line-height: 1.6; max-width: 640px; }
-    .desc b { color: #04e3b2; font-weight:700; }
-
-    .cta { margin-top: 28px; pointer-events: auto; }
-    .btn { display:inline-block; padding: 12px 28px; border-radius: 30px; border: 2px solid #04e3b2; color: #fff; text-decoration:none; font-weight:600; transition: all .25s ease; background: transparent; }
-    .btn:hover { background: #04e3b2; color:#03293b; }
-
-    /* overlay elements animation — we toggle .show on these to reveal text with stagger */
-    .overlay-anim { opacity:1.5; transform: translateY(18px) scale(0.99); transition: all 520ms cubic-bezier(.2,.9,.2,1); }
-    .overlay-anim.show { opacity: 1; transform: translateY(0) scale(1); }
-
-    .scroll-arrow { position: absolute; right: 28px; bottom: 20px; z-index: 20; font-size: 1.4rem; opacity: 0.78; cursor: pointer; user-select: none; animation: bounce 1.6s infinite; color: #fff; }
-    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-    /* rest of page styles unchanged */
-    .about-section { background: linear-gradient(135deg, #001826, #002235); padding: 80px 56px; position: relative; }
-    .about-container { max-width: 1200px; margin: 0 auto; }
-    .about-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 24px; color: #04e3b2; text-align: center; }
-    .about-subtitle { font-size: 1.2rem; opacity: 0.8; text-align: center; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
-    .about-text { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; }
-    .about-text p { margin-bottom: 20px; }
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .stat-card { background: rgba(255,255,255,0.05); padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(4, 227, 178, 0.2); transition: all 0.3s ease; }
-    .stat-card:hover { transform: translateY(-5px); border-color: #04e3b2; background: rgba(4, 227, 178, 0.1); }
-    .stat-number { font-size: 2.2rem; font-weight: 700; color: #04e3b2; margin-bottom: 8px; }
-    .stat-label { opacity: 0.8; font-size: 0.9rem; }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
-    .service-card { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; text-align: center; }
-    .service-card:hover { transform: translateY(-8px); border-color: rgba(4, 227, 178, 0.3); background: rgba(255,255,255,0.06); }
-    .service-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
-    .service-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: #04e3b2; }
-    .service-desc { opacity: 0.8; line-height: 1.6; font-size: 0.95rem; }
-
-    main.content { background: #001826; padding: 64px 56px; color: #fff; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; margin-top: 12px; }
-    .card { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; transition: transform 0.3s ease; }
-    .card:hover { transform: translateY(-5px); }
-    .card img { width:100%; display:block; border-radius: 6px; }
-    footer { padding: 36px 56px; color: rgba(255,255,255,0.65); background: #00101a; }
-
-    @media (max-width:900px) {
-      .headline { font-size: 2rem; }
-      .hero { padding: 20px; height: 100vh; }
-      .video-container { width: 100%; height: 100vh; }
-      .hero-section { height: 100vh; }
-      .hero-overlay { left: 20px; bottom: 20px; max-width: calc(100% - 40px); margin-left: 0; padding: 32px; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-stats { grid-template-columns: repeat(2, 1fr); }
-      .services-grid { grid-template-columns: 1fr; }
-      .about-title { font-size: 2.2rem; }
-      
-      .hero-title {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-      }
-      
-      .scroll-instruction {
-        font-size: 1rem;
-        padding: 0 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
 
+  <!-- Role: Page header containing branding and primary navigation links. Visible at the top of every page. -->
   <header>
+    <!-- Role: Brand/logo area: image + company name. Keeps brand identity consistent. -->
     <div class="logo">
       <img src="res/logo.png" alt="Logo">
-      ABDELRAHMAN ELKHATIB
+      3DXENON
     </div>
+    <!-- Role: Primary navigation links to key sections and contact page. -->
     <nav>
-      <a href="#solutions">SOLUTIONS</a>
-      <a href="#work">OUR WORK</a>
-      <a href="#news">NEWS</a>
-      <a href="#team">TEAM</a>
-      <a href="#contact">CONTACT</a>
+      <a href="#about">SOLUTIONS</a>
+      <a href="#case">Our Services</a>
+      <!-- <a href="news.html">NEWS</a> -->
+      <!-- <a href="#team">TEAM</a> -->
+      <a href="contact.html">CONTACT</a>
     </nav>
   </header>
+  
+  <!-- Role: Spacer element to separate header from main content (often used to maintain visual spacing or to offset fixed headers). -->
   <div class="spacer"></div>
 
+  <!-- Role: Hero section root. Contains the initial headline, video feed iframe, and scroll affordance. This is the visual entry point of the site. -->
   <div class="hero" id="heroRoot">
-    <!-- Initial Hero Content -->
+    <!-- Role: Initial hero content: animated title words and a scroll instruction. Used for first impression and CTA to scroll. -->
     <div class="hero-initial" id="heroInitial">
       <h1 class="hero-title">
         <span class="word">From</span>
@@ -281,30 +55,66 @@
       <p class="scroll-instruction" id="scrollInstruction">SCROLL DOWN TO CONTINUE</p>
     </div>
 
+    <!-- Role: Container for the live/embed video feed. Embeds another HTML (cash.html) via an iframe to display stacked videos or dynamic content. Keeps the main page lightweight while loading video content separately. -->
     <div class="video-container" id="videoContainer">
       <!-- REPLACED: iframe that loads vidd.html (page with the stacked videos) -->
       <iframe
         id="videoFrame"
-        src="video.html"
+        src="cash.html"
         title="Video feed"
         allow="autoplay; fullscreen"
         style="width:100%; height:100%; border:0; display:block;">
       </iframe>
     </div>
-
+    
+    <!-- Role: Visual scroll arrow hint encouraging users to scroll for more content. -->
     <div class="scroll-arrow" id="scrollArrow">↓</div>
   </div>
 
+  <!-- Role: Services / Hero supporting title section. Provides an introductory headline and descriptive paragraph explaining company offering and digital twin concept. -->
+<section class="services-title">
+  <div class="services-title-container">
+    <!-- Main title -->
+    <h2 class="services-main-title" data-services-animate>
+      Welcome to the future of design and visualization
+    </h2>
+    
+    <!-- Description paragraph explaining the value proposition and use-cases. -->
+    <p class="services-description" data-services-animate>
+      A Digital Twin is a dynamic, high-fidelity virtual replica of your physical asset. 
+      It allows you to test, simulate, and understand real-world scenarios—from seasonal weather 
+      changes to operational efficiency—before any construction begins. Explore the interactive 
+      visualizations below to see how our models empower smarter, data-driven decisions.
+    </p>
+
+    <!-- Decorative line used for visual separation and to support entrance animations. -->
+    <div class="services-line" data-services-animate></div>
+  </div>
+</section>
+
+    <!-- Role: Section containing an iframe named 'season.html' likely used for seasonal demos, interactive visualizations, or embedded content. Placing complex visual demos inside an iframe isolates styles and scripts. -->
+    <div class="season-container">
+    <iframe
+        src="season.html"
+        allowfullscreen
+        allow="autoplay">
+    </iframe>
+    </div>
+
+  <!-- Role: About section describing company background, team, capabilities and stats. Useful for trust signals and social proof. -->
   <section class="about-section" id="about">
     <div class="about-container">
       <h2 class="about-title">About Our Company</h2>
       <p class="about-subtitle">We are a team of creative professionals specializing in advanced visual content production</p>
       <div class="about-grid">
+        <!-- Role: Main about text paragraphs. Explain services, experience and team composition. -->
         <div class="about-text">
-          <p>ABDELRAHMAN EL KHATIB is a leading company in 3D visual content production and virtual reality. We combine art and technology to create unforgettable visual experiences that help our clients connect with their audience in new and innovative ways.</p>
+          <p>3DXENON is a leading company in 3D visual content production and virtual reality. We combine art and technology to create unforgettable visual experiences that help our clients connect with their audience in new and innovative ways.</p>
           <p>Since our founding, we have developed hundreds of projects for large corporations and startups, making us the first choice for clients looking for quality and creativity in one package.</p>
           <p>Our team consists of experienced designers, developers, and creative artists who work together to transform ideas into stunning visual realities.</p>
         </div>
+        
+        <!-- Role: Short statistics cards used as visual proof points (projects, clients, experience, awards). -->
         <div class="about-stats">
           <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Completed Projects</div></div>
           <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Happy Clients</div></div>
@@ -312,6 +122,8 @@
           <div class="stat-card"><div class="stat-number">15+</div><div class="stat-label">Awards Won</div></div>
         </div>
       </div>
+
+      <!-- Role: Grid of service offerings. Each card highlights a core service with icon, title and brief description. -->
       <div class="services-grid">
         <div class="service-card"><div class="service-icon">🎬</div><h3 class="service-title">Video Production</h3><p class="service-desc">Professional high-quality video production for companies and institutions using the latest techniques and equipment.</p></div>
         <div class="service-card"><div class="service-icon">🎮</div><h3 class="service-title">3D Modeling</h3><p class="service-desc">Design and production of realistic 3D models for products, buildings, and characters.</p></div>
@@ -321,208 +133,280 @@
     </div>
   </section>
 
-  <main class="content" id="work"><h2 style="font-size:1.4rem; margin-bottom:12px;">Our Work — Gallery</h2><div class="gallery"><div class="card"><img src="res/img1.jpg" alt=""></div><div class="card"><img src="res/img2.jpg" alt=""></div><div class="card"><img src="res/img3.jpg" alt=""></div><div class="card"><img src="res/img4.jpg" alt=""></div><div class="card"><img src="res/img5.jpg" alt=""></div></div></main>
-
-  <footer>© <span id="year"></span> ABDELRAHMAN EL KHATIB— all rights reserved</footer>
-
-  <script>
-    const sections = Array.from(document.querySelectorAll('.hero-section'));
-    const videos = Array.from(document.querySelectorAll('.sectionVideo'));
-    const container = document.getElementById('videoContainer');
-
-    let current = 0;
-    let switching = false;
-    let overlayTimer = null;
-
-    const FADE_MS = 900; // longer cinematic crossfade
-    const OVERLAY_DELAY = 1400; // text appears noticeably after video starts
-
-    // populate each <video> src from data attribute
-    sections.forEach((sec, idx) => {
-      const v = videos[idx];
-      const src = sec.dataset.video;
-      if (v) {
-        v.src = src;
-        v.preload = 'metadata';
-      }
-    });
-
-    // IntersectionObserver: when a section is centered enough -> make it active
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const idx = sections.indexOf(entry.target);
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-          activate(idx);
-        }
-      });
-    }, { root: container, threshold: [0.6] });
-
-    sections.forEach(s => io.observe(s));
-
-    function clearOverlay(section) {
-      if (!section) return;
-      const animEls = section.querySelectorAll('.overlay-anim');
-      animEls.forEach(el => el.classList.remove('show'));
-      section.classList.remove('show-overlay');
-    }
-
-    function activate(idx) {
-      if (idx === current || switching) return;
-      switching = true;
-
-      const prevVideo = videos[current];
-      const prevSection = sections[current];
-
-      // Prepare next
-      const nextVideo = videos[idx];
-      const nextSection = sections[idx];
-
-      // clear previous overlays immediately
-      clearTimeout(overlayTimer);
-      clearOverlay(prevSection);
-      clearOverlay(nextSection);
-
-      // play next video and crossfade
-      if (nextVideo) {
-        try { nextVideo.currentTime = 0; } catch(e) {}
-        nextVideo.muted = true; // keep muted until user interacts
-        nextVideo.style.zIndex = 3; // bring above prev
-        // start playing
-        const p = nextVideo.play();
-        if (p !== undefined) p.catch(()=>{});
-        // make it visible (fade in)
-        // add visible after a tiny delay to let decoding start for smoother fade
-        nextVideo.classList.add('visible');
-      }
-
-      // fade out previous but keep it visible during overlap for cinematic crossfade
-      if (prevVideo) {
-        prevVideo.classList.remove('visible');
-        // pause and reset after fade completes
-        setTimeout(() => {
-          try { prevVideo.pause(); prevVideo.currentTime = 0; } catch(e) {}
-          prevVideo.style.zIndex = '';
-        }, FADE_MS + 200);
-      }
-
-      // handle section active class for overlay positioning (we keep same placement)
-      if (prevSection) prevSection.classList.remove('active');
-      if (nextSection) nextSection.classList.add('active');
-
-      // show overlay after a longer delay to make it feel like it appears after video
-      overlayTimer = setTimeout(() => {
-        if (!nextSection) return;
-        nextSection.classList.add('show-overlay');
-        const animEls = nextSection.querySelectorAll('.overlay-anim');
-        animEls.forEach((el, i) => setTimeout(() => el.classList.add('show'), 100 * i));
-      }, OVERLAY_DELAY);
-
-      // finish switching
-      setTimeout(() => {
-        current = idx;
-        if (nextVideo) nextVideo.style.zIndex = '';
-        switching = false;
-      }, FADE_MS + 220);
-    }
-
-    // initial activation
-    if (sections.length > 0) {
-      const firstVideo = videos[0];
-      const firstSection = sections[0];
-      if (firstSection) firstSection.classList.add('active');
-      if (firstVideo) {
-        firstVideo.muted = true;
-        firstVideo.play().catch(()=>{});
-        setTimeout(() => firstVideo.classList.add('visible'), 80);
-        overlayTimer = setTimeout(() => {
-          firstSection.classList.add('show-overlay');
-          const animEls = firstSection.querySelectorAll('.overlay-anim');
-          animEls.forEach((el, i) => setTimeout(() => el.classList.add('show'), 100 * i));
-        }, OVERLAY_DELAY);
-      }
-    }
-
-    let hasScrolledOnce = false;
-    const heroInitial = document.getElementById('heroInitial');
-    const scrollInstruction = document.getElementById('scrollInstruction');
-
-    // Show video container on first scroll
-    function handleFirstScroll() {
-      if (!hasScrolledOnce) {
-        hasScrolledOnce = true;
-        
-        // Hide initial hero content
-        heroInitial.classList.add('hide');
-        
-        // Show video container after a short delay
-        setTimeout(() => {
-          container.classList.add('show');
-        }, 500);
-        
-        // Remove scroll listeners after first scroll
-        window.removeEventListener('wheel', handleFirstScroll);
-        window.removeEventListener('touchstart', handleFirstScroll);
-        scrollInstruction.removeEventListener('click', handleFirstScroll);
-      }
-    }
-
-    // Add scroll listeners for first interaction
-    window.addEventListener('wheel', handleFirstScroll, { passive: true });
-    window.addEventListener('touchstart', handleFirstScroll, { passive: true });
+<!-- Role: Clients section to showcase partner logos and provide social proof. Uses a continuous slider track for seamless logo animation. -->
+<section class="clients-section">
+  <div class="clients-container">
+    <!-- Section Title -->
+    <h2 class="clients-title" data-clients-animate>Our Clients</h2>
+    <p class="clients-subtitle" data-clients-animate>Trusted by leading brands worldwide</p>
     
-    // Add click listener to scroll instruction
-    scrollInstruction.addEventListener('click', handleFirstScroll);
-
-    // send message to iframe to scroll to next section
-    document.getElementById('scrollArrow').addEventListener('click', () => {
-      if (!hasScrolledOnce) {
-        handleFirstScroll();
-      }
-      
-      // send message to iframe to scroll to next section
-      const iframe = document.getElementById('videoFrame');
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ action: 'scrollNext' }, '*');
-      }
-    });
-
-    // unmute on first interaction (only visible video)
-    let firstInteractionDone = false;
-    function enableSoundOnFirstInteraction() {
-      if (firstInteractionDone) return;
-      firstInteractionDone = true;
-      const v = videos[current];
-      if (v) { v.muted = false; v.volume = 0.9; }
-      window.removeEventListener('wheel', enableSoundOnFirstInteraction);
-      window.removeEventListener('touchstart', enableSoundOnFirstInteraction);
-      window.removeEventListener('click', enableSoundOnFirstInteraction);
-      window.removeEventListener('keydown', enableSoundOnFirstInteraction);
-    }
-    window.addEventListener('wheel', enableSoundOnFirstInteraction, {passive:true});
-    window.addEventListener('touchstart', enableSoundOnFirstInteraction, {passive:true});
-    window.addEventListener('click', enableSoundOnFirstInteraction, {passive:true});
-    window.addEventListener('keydown', enableSoundOnFirstInteraction, {passive:true});
-
-    // keyboard support - show container first if needed, then send to iframe
-    window.addEventListener('keydown', (ev) => {
-      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
-        if (!hasScrolledOnce) {
-          handleFirstScroll();
-        }
+    <!-- Role: Logos slider - a horizontally scrolling track containing client logos. Duplicated logos create a seamless infinite loop effect. -->
+    <div class="logos-slider">
+      <div class="logos-track" id="logosTrack">
+        <!-- First Set of Logos -->
+        <div class="logo-item">
+          <img src="images/logos/client1.png" alt="Client 1">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client2.png" alt="Client 2">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client3.png" alt="Client 3">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client4.png" alt="Client 4">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client5.png" alt="Client 5">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client6.png" alt="Client 6">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client7.png" alt="Client 7">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client8.png" alt="Client 8">
+        </div>
         
-        const iframe = document.getElementById('videoFrame');
-        if (iframe && iframe.contentWindow) {
-          iframe.contentWindow.postMessage({ 
-            action: 'keydown', 
-            key: ev.key 
-          }, '*');
-        }
-      }
-    });
+        <!-- Duplicate Set for Seamless Loop -->
+        <div class="logo-item">
+          <img src="images/logos/client1.png" alt="Client 1">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client2.png" alt="Client 2">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client3.png" alt="Client 3">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client4.png" alt="Client 4">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client5.png" alt="Client 5">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client6.png" alt="Client 6">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client7.png" alt="Client 7">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client8.png" alt="Client 8">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Role: Optional second logo row that moves in opposite direction for visual contrast. -->
+    <div class="logos-slider logos-slider-reverse">
+      <div class="logos-track logos-track-reverse" id="logosTrackReverse">
+        <!-- First Set of Logos -->
+        <div class="logo-item">
+          <img src="images/logos/client9.png" alt="Client 9">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client10.png" alt="Client 10">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client11.png" alt="Client 11">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client12.png" alt="Client 12">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client13.png" alt="Client 13">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client14.png" alt="Client 14">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client15.png" alt="Client 15">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client16.png" alt="Client 16">
+        </div>
+        
+        <!-- Duplicate Set for Seamless Loop -->
+        <div class="logo-item">
+          <img src="images/logos/client9.png" alt="Client 9">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client10.png" alt="Client 10">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client11.png" alt="Client 11">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client12.png" alt="Client 12">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client13.png" alt="Client 13">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client14.png" alt="Client 14">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client15.png" alt="Client 15">
+        </div>
+        <div class="logo-item">
+          <img src="images/logos/client16.png" alt="Client 16">
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- Role: Case-study / portfolio section showcasing selected projects. Each card links to a detailed case study page using query parameters. -->
+<!-- case-study Section - Updated with Links -->
+<section class="case-study" id="case">
+  <div class="case-study-container">
+    <!-- Section Header -->
+    <h2 class="case-study-title">Our Services — Case Study</h2>
+    
+    <!-- Case-Study Grid -->
+    <div class="work-grid">
+      
+      <!-- Card 1: Residential Complex project. Link includes id query for details page to load content dynamically. -->
+      <a href="card-details.html?id=project-1" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service1.png" alt="Building & Infrastructure Twins">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Residential Complex</div>
+          <h3 class="work-card-title">Building & Infrastructure Twins</h3>
+          <p class="work-card-description">
+            Create digital replicas of buildings and infrastructure for optimized maintenance, energy efficiency, and space utilization.
+          </p>
+          <div class="work-card-tags">
+            <span class="work-tag">Building Management</span>
+            <span class="work-tag">Energy Efficiency</span>
+            <span class="work-tag">IoT Integration</span>
+          </div>
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
-  </script>
+      <!-- Card 2: Villa / Hyper-Realistic Visuals project. -->
+      <a href="card-details.html?id=project-2" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service2.png" alt="Hyper-Realistic Visuals">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Villa</div>
+          <h3 class="work-card-title">Hyper-Realistic Visuals</h3>
+          <p class="work-card-description">
+            We create photorealistic renders, animations, and interactive visuals that make spaces feel real—turning concepts into emotions and helping your project sell itself.
+          </p>
+          <div class="work-card-tags">
+            <span class="work-tag">Real Estate</span>
+            <span class="work-tag">Residential</span>
+            <span class="work-tag">Visualization</span>
+          </div>
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
+      <!-- Card 3: Urban planning digital twin project. Links to details via id query. -->
+      <a href="card-details.html?id=project-3" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service3.png" alt="Urban Planning Digital Twin">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">North European Metropolitan Authority</div>
+          <h3 class="work-card-title">Urban Planning Digital Twin</h3>
+          <p class="work-card-description">
+            Urban visualization turned into a game-style navigation experience. This project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digital/Infinity purposes.
+          </p>
+          <div class="work-card-tags">
+            <span class="work-tag">Urban Planning</span>
+            <span class="work-tag">Visualization</span>
+            <span class="work-tag">Simulation</span>
+          </div>
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Card 4: AI-enhanced analytics project for parking/solar/energy scenarios. -->
+      <a href="card-details.html?id=project-4" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service4.png" alt="AI-Enhanced Analytics">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">University Parking, Government Building</div>
+          <h3 class="work-card-title">AI-Enhanced Analytics</h3>
+          <p class="work-card-description">
+            Apply machine learning to your digital twin data for predictive insights, anomaly detection, and automated decision support.
+          </p>
+          <div class="work-card-tags">
+            <span class="work-tag">Automated Parking Lot</span>
+            <span class="work-tag">Solar Panels</span>
+            <span class="work-tag">User Energy Cost Estimation</span>
+            <span class="work-tag">Digital Twin</span>
+          </div>
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+  <!-- Role: Footer with copyright & dynamic year span. The #year element is likely populated by script/script.js at runtime. -->
+  <footer>© <span id="year"></span> 3DXENON— all rights reserved</footer>
+
+  
 </body>
 </html>

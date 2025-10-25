@@ -1,0 +1,68 @@
+<!-- Role: Video hero page (cash.html). Contains a fixed video hero area that dynamically loads videos via JavaScript and exposes invisible scroll sections used as data sources for each staged video. Do not change code — comments explain each logical block. -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <!-- Role: Document metadata and responsive viewport settings. -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  
+  <!-- Role: Page title shown in browser tab. -->
+  <title>Spatial Media — Video Hero</title>
+
+  <!-- Role: Load Roboto font for consistent typography. -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Role: Link to local stylesheet for hero and media styles. -->
+  <link rel="stylesheet" href="css/cash.css" />
+  
+  <!-- Role: Link to the script that dynamically creates video elements and wires scroll interactions. 'defer' ensures it runs after parsing. -->
+  <script src="script/cashh.js" defer></script>
+</head>
+<body>
+
+  <!-- Role: Fixed hero wrapper that holds the dynamically-created video elements and overlay text. This area is intended to remain static while videos change behind the content. -->
+  <div class="video-hero">
+    <div class="video-container" id="videoContainer">
+      <!-- Role: Placeholder comment — all <video> elements will be created and injected here by the script at runtime. -->
+      
+      <!-- Role: Text overlay shown on top of videos. Contains category, headline, descriptive paragraph and a CTA button. Text is updated dynamically to match the active video section. -->
+      <div class="text-overlay">
+        <div class="category" id="category">3D & VIDEO PRODUCTION</div>
+        <h1 class="main-title" id="mainTitle">Ready for web, TV and socials</h1>
+        <p class="description" id="description">
+          Converting technical 3D engineering models and complex comms messages into beautifully crafted 
+          <span class="highlight" id="highlight">video and image</span> stories is our bread and butter.
+        </p>
+        <a href="#" class="continue-btn" id="continueBtn">Continue</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Role: Invisible scroll-trigger sections. Each .scroll-section provides data-* attributes that the script reads to create and sequence the corresponding video and overlay content. These elements are intentionally not visible and act as structured data sources for the page. -->
+  <div class="scroll-section" data-video="res/vid1.mp4" 
+       data-category="3D & VIDEO PRODUCTION"
+       data-title="Ready for web, TV and socials"
+       data-description="Converting technical 3D engineering models and complex comms messages into beautifully crafted "
+       data-highlight="video and image"></div>
+
+  <div class="scroll-section" data-video="res/vid2.mp4"
+       data-category="IMMERSIVE DESIGN"
+       data-title="Virtual and Augmented Reality"
+       data-description="Bringing concepts to life using interactive 3D spaces that work seamlessly on "
+       data-highlight="multiple platforms"></div>
+
+  <div class="scroll-section" data-video="res/vid3.mp4"
+       data-category="CREATIVE CONTENT"
+       data-title="Storytelling that inspires"
+       data-description="We blend art and technology to create visuals that captivate audiences and communicate "
+       data-highlight="complex ideas"></div>
+
+  <div class="scroll-section" data-video="res/vid4.mp4"
+       data-category="FUTURE READY"
+       data-title="Innovations for tomorrow"
+       data-description="Our work is focused on cutting-edge solutions that transform industries and redefine "
+       data-highlight="digital engagement"></div>
+
+ 
+</body>
+</html>

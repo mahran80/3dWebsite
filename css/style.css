@@ -1,0 +1,771 @@
+/* Role: Global reset — ensures consistent box model and removes default spacing across browsers. */
+* { box-sizing: border-box; margin:0; padding:0; }
+
+/* Role: Ensure the html and body elements always span the full viewport height for layout calculations. */
+html,body { height:100%;}
+
+/* Role: Base body styles — typography, background gradient, text color, and smoothing for improved rendering. Prevents horizontal overflow by default. */
+body {
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:  linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
+  color: #fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y: auto;
+}
+
+/* Role: Header layout — fixed top navigation area, spacing, translucent background and subtle border for separation. */
+header { 
+  position: fixed; 
+  top:0; 
+  left:0; 
+  right:0; 
+  height:90px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding: 0 48px; 
+  background: rgba(0,44,64,0.15); 
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid rgba(255,255,255,0.1); 
+  z-index: 9999; 
+}
+
+/* Role: Logo block styling — aligns image and text, sets weight and spacing for brand identity. */
+.logo { 
+  display: flex; 
+  align-items: center; 
+  font-weight: 700; 
+  letter-spacing: 1.6px; 
+  color: #ffffff; 
+  font-size: 1.05rem; 
+}
+
+/* Role: Logo image appearance — circular avatar, border accent, and spacing from the brand text. */
+.logo img { 
+  height: 40px; 
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #04e3b2;
+  object-fit: cover;
+  margin-right: 12px; 
+}
+
+/* Role: Navigation link styles — spacing, weight and hover accent color. */
+nav a { color: #fff; text-decoration: none; margin-left: 28px; opacity: 0.9; font-weight: 500; font-size: 0.95rem; }
+nav a:hover { color: #04e3b2; }
+
+/* Role: Spacer to offset the fixed header so page content does not appear beneath it. */
+.spacer { height: 72px; }
+
+/* Role: Hero container — full viewport height area that centers its content and hides overflow. */
+.hero { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #001826; }
+
+/* Role: Initial hero content overlay — title and CTA that appear before the embedded video becomes visible. Includes entrance transitions. */
+.hero-initial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: linear-gradient(135deg, #001826 0%, #002c40 50%, #0ea5ff 100%);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Role: Utility state to hide the initial hero content (used when user scrolls or video appears). */
+.hero-initial.hide {
+  opacity: 0;
+  transform: translateY(-50px);
+  pointer-events: none;
+}
+
+/* Role: Hero title typography — large, bold headline with responsive padding and max width for readability. */
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  max-width: 900px;
+  padding: 0 2rem;
+}
+
+/* Role: Individual word animation wrapper — used to stagger entrance animations for each word in the headline. */
+.hero-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFade 0.8s ease forwards;
+}
+
+/* Role: Staggered animation delays and highlighted color for specific words to create emphasis. */
+.hero-title .word:nth-child(1) { animation-delay: 0.2s; }
+.hero-title .word:nth-child(2) { animation-delay: 0.5s; color: #04e3b2; }
+.hero-title .word:nth-child(3) { animation-delay: 0.8s; }
+.hero-title .word:nth-child(4) { animation-delay: 1.1s; color: #04e3b2; }
+.hero-title .word:nth-child(5) { animation-delay: 1.4s; }
+
+/* Role: Keyframe used by the headline word animation to slide up and fade in. */
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Role: Scroll instruction CTA styles — smaller text with delayed animation and hover accent. */
+.scroll-instruction {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: 500;
+  opacity: 0;
+  animation: slideUpFade 0.8s ease forwards;
+  animation-delay: 2s;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Role: Hover effect for the scroll instruction to match brand accent color. */
+.scroll-instruction:hover {
+  color: #04e3b2;
+}
+
+/* Role: Adds a downward arrow after the instruction and a subtle bounce animation for attention. */
+.scroll-instruction::after {
+  content: '↓';
+  display: block;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  animation: bounce 2s infinite;
+  animation-delay: 3s;
+}
+
+/* Role: Container that holds the embedded video iframe(s). Initially translated offscreen and faded out to allow an animated reveal. Also provides scroll-snap behavior for internal sections. */
+.video-container { 
+  position: relative;
+  width: 100%; 
+  max-width: none; 
+  height: 100vh; 
+  border-radius: 0; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  box-shadow: none; 
+  scroll-behavior: smooth ; 
+  scroll-snap-type: y mandatory; 
+  overscroll-behavior: contain; 
+  -webkit-overflow-scrolling: touch;
+  transform: translateY(100vh);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+}
+
+/* Role: Visible state for the video container to slide it into view and fade it in. */
+.video-container.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Role: Completely hide native scrollbars in WebKit-based browsers for a cleaner visual. */
+.video-container::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+}
+.video-container {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+.video-container * {
+  scrollbar-width: none;
+}
+
+/* Role: Each hero-section fills the container and participates in scroll-snap; ensures only one section visible at a time. */
+.hero-section { height: 100%; width: 100%; position: relative; flex-shrink: 0; scroll-snap-align: center; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+
+/* Role: Video element styling for sections; positioned absolutely to overlay the section area and use object-fit to control scaling. Opacity transitions handle fade between videos. */
+.sectionVideo { position: absolute; top:0; left:0; width:100%; height:100%; /* keep aspect ratio without cropping */ object-fit:fill; object-position: center center; background: #001826; display: block; opacity: 0; transition: opacity 900ms ease; z-index: 1; }
+.sectionVideo.visible { opacity: 1; }
+
+/* Role: Overlay text that appears on top of videos; hidden by default and revealed when the section becomes active. Pointer-events disabled to avoid blocking video interaction. */
+.hero-overlay { position: absolute; z-index:20; max-width: 860px; padding: 28px 30px; text-align: left; bottom: 2px; left: 28px; color: #ffffff; font-weight: 1200;pointer-events: none; opacity: 0; transform: translateY(12px); transition: opacity 420ms ease, transform 420ms ease;text-shadow: 0 8px 24px rgba(0,0,0,0.8); }
+.hero-section.show-overlay .hero-overlay { opacity: 1; transform: translateY(0); }
+
+/* Role: Container for the 'season' demo iframe — provides full-height layout and background. */
+.season-container{
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* margin: 15px auto; */
+  padding: 0;
+  border: none;
+  background-color: #03293b;
+  position: relative;
+  /* max-width: none;  */
+  /* border-radius: 0;  */
+  /* overflow-y: auto;  */
+  /* box-shadow: none;  */
+  /* scroll-behavior: smooth ; 
+  scroll-snap-type: y mandatory; 
+  overscroll-behavior: contain; 
+  -webkit-overflow-scrolling: touch; */
+  /* transform: translateY(100vh); */
+  /* opacity: 0; */
+  /* transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease; */
+}
+
+/* Role: Styling for the iframe placed inside the season container — full-bleed, min-height for smaller viewports and subtle elevation via box-shadow. */
+.season-container iframe {
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+        min-height: 600px;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        background-color: #03293b;
+}
+
+/* Role: Services title section layout; centers content vertically and provides generous padding for large screens. */
+.services-title {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #002c40 0%, #001a28 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 40px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.services-title-container {
+  max-width: 1100px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Role: Main services section headline initial state — animated into view when triggered by JS. */
+.services-main-title {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 40px;
+  letter-spacing: -1px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Role: Class to trigger the headline entrance animation — toggled by JS when section enters viewport. */
+.services-main-title.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Role: Services description styles — secondary text with delayed animation for layered entrance. */
+.services-description {
+  font-size: 1.35rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 950px;
+  margin: 0 auto 50px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+/* Role: Class to animate the description into view. */
+.services-description.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Role: Decorative line element used as a visual accent that expands when animated. */
+.services-line {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #04e3b2, transparent);
+  margin: 0 auto;
+  border-radius: 2px;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+  box-shadow: 0 0 20px rgba(4, 227, 178, 0.5);
+}
+
+/* Role: Class that expands the decorative line to its final width when animated. */
+.services-line.animate {
+  width: 80%;
+}
+
+/* Role: Utility typography classes for smaller header blocks and descriptive text. */
+.kicker { font-size: 0.85rem; letter-spacing: 2.4px; opacity: 2; margin-bottom:8px; }
+.headline { font-size: 2.2rem; line-height: 1.03; font-weight: 700; margin-bottom:8px; letter-spacing: -0.6px; }
+.desc { font-size: 1rem; opacity:2; line-height: 1.6; max-width: 640px; }
+.desc b { color: #04e3b2; font-weight:700; }
+
+/* Role: Call-to-action button styles — pill-shaped with border accent and hover fill. */
+.cta { margin-top: 28px; pointer-events: auto; }
+.btn { display:inline-block; padding: 12px 28px; border-radius: 30px; border: 2px solid #04e3b2; color: #fff; text-decoration:none; font-weight:600; transition: all .25s ease; background: transparent; }
+.btn:hover { background: #04e3b2; color:#03293b; }
+
+/* Role: Overlay entrance animation helper class to reveal grouped elements with a subtle scale/translate. */
+.overlay-anim { opacity:1.5; transform: translateY(18px) scale(0.99); transition: all 520ms cubic-bezier(.2,.9,.2,1); }
+.overlay-anim.show { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Role: Floating scroll arrow used in the hero to indicate more content below; includes bounce animation. */
+.scroll-arrow { position: absolute; right: 28px; bottom: 20px; z-index: 20; font-size: 1.4rem; opacity: 0.78; cursor: pointer; user-select: none; animation: bounce 1.6s infinite; color: #fff; }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* Role: General about-section layout and spacing — background, padding, and positioning for the company bio block. */
+.about-section { background: linear-gradient(135deg, #001826, #002235); padding: 80px 56px; position: relative; }
+.about-container { max-width: 1200px; margin: 0 auto; }
+.about-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 24px; color: #04e3b2; text-align: center; }
+.about-subtitle { font-size: 1.2rem; opacity: 0.8; text-align: center; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+.about-text { font-size: 1.1rem; line-height: 1.8; opacity: 0.9; }
+.about-text p { margin-bottom: 20px; }
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.stat-card { background: rgba(255,255,255,0.05); padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(4, 227, 178, 0.2); transition: all 0.3s ease; }
+.stat-card:hover { transform: translateY(-5px); border-color: #04e3b2; background: rgba(4, 227, 178, 0.1); }
+.stat-number { font-size: 2.2rem; font-weight: 700; color: #04e3b2; margin-bottom: 8px; }
+.stat-label { opacity: 0.8; font-size: 0.9rem; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+.service-card { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; text-align: center; }
+.service-card:hover { transform: translateY(-8px); border-color: rgba(4, 227, 178, 0.3); background: rgba(255,255,255,0.06); }
+.service-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+.service-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: #04e3b2; }
+.service-desc { opacity: 0.8; line-height: 1.6; font-size: 0.95rem; }
+
+/* Role: Case-study section visual settings — layout, spacing and z-index for portfolio area. */
+.case-study {
+  position: relative;
+  min-height: 100vh;
+  background: #002c40;
+  padding: 100px 40px;
+  z-index: 10;
+}
+
+.case-study-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Role: Case-study section header typography. */
+.case-study-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 60px;
+  text-align: left;
+}
+
+/* Role: Grid layout for the work cards — responsive column sizing with consistent gaps. */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* Role: Individual work card baseline styles — subtle background, rounded corners and entrance transform. */
+.work-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+/* Role: Class to animate cards into view (toggled by JS). */
+.work-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Role: Hover effect for cards: lift and stronger border/shadow for emphasis. */
+.work-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(4, 227, 178, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Role: Card image container and overflow handling. */
+.work-card-image {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: #000;
+}
+
+.work-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+/* Role: Subtle scale-up effect on hover to give images life. */
+.work-card:hover .work-card-image img {
+  transform: scale(1.08);
+}
+
+/* Role: Overlay gradient on top of images that appears on hover to improve icon readability. */
+.work-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 44, 64, 0) 0%,
+    rgba(0, 44, 64, 0.7) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.work-card:hover .work-card-overlay {
+  opacity: 1;
+}
+
+/* Role: Icon styling inside the overlay — circular container with accent border and backdrop blur. */
+.work-card-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(4, 227, 178, 0.2);
+  border: 2px solid #04e3b2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transform: scale(0.8);
+  transition: transform 0.4s ease;
+}
+
+.work-card:hover .work-card-icon {
+  transform: scale(1);
+}
+
+.work-card-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #04e3b2;
+}
+
+/* Role: Padding and spacing for the card textual content. */
+.work-card-content {
+  padding: 28px;
+}
+
+.work-card-category {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #04e3b2;
+  margin-bottom: 12px;
+}
+
+.work-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.work-card-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+/* Role: Tag chips used to categorize projects — small pill elements with subtle borders. */
+.work-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.work-tag {
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.work-card:hover .work-tag {
+  background: rgba(4, 227, 178, 0.1);
+  border-color: rgba(4, 227, 178, 0.3);
+  color: #04e3b2;
+}
+
+/* Role: Case-study link area styling (non-interactive visually here because pointer-events are none on the link span). */
+.work-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #04e3b2;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.work-card-link svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.work-card-link:hover {
+  gap: 12px;
+}
+
+.work-card:hover .work-card-link {
+  gap: 12px;
+}
+
+.work-card-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* Role: Responsive adjustments for tablet and phone widths to maintain readability and stacking. */
+@media (max-width: 1024px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .case-study {
+    padding: 80px 30px;
+  }
+
+  .case-study-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .work-card-image {
+    height: 240px;
+  }
+
+  .work-card-content {
+    padding: 24px;
+  }
+
+  .work-card-title {
+    font-size: 1.3rem;
+  }
+}
+
+/* Role: Clients section layout and background — centers client logos and provides vertical padding. */
+.clients-section {
+  position: relative;
+  padding: 100px 40px;
+  background: linear-gradient(180deg, #001a28 0%, #002c40 100%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.clients-container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Role: Clients section heading entrance animation initial state. */
+.clients-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 15px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Role: Trigger class to animate the clients title into view. */
+.clients-title.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.clients-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.clients-subtitle.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Role: Logos slider container that masks overflowing logo tracks. */
+.logos-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 40px;
+  padding: 20px 0;
+}
+
+/* Role: Optional gradient masks at the sides — placeholders currently commented out, but structure retained for future use. */
+.logos-slider::before,
+.logos-slider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logos-slider::before {
+  left: 0;
+  /* background: linear-gradient(90deg, #002c40 0%, transparent 100%); */
+}
+
+.logos-slider::after {
+  right: 0;
+  /* background: linear-gradient(270deg, #002c40 0%, transparent 100%); */
+}
+
+/* Role: Flex track that animates horizontally to create an infinite-scrolling logos belt. Pauses on hover for accessibility. */
+.logos-track {
+  display: flex;
+  gap: 60px;
+  animation: scrollLogos 30s linear infinite;
+  width: fit-content;
+}
+
+.logos-track:hover {
+  animation-play-state: paused;
+}
+
+/* Role: Reverse-direction track used for the second row to create visual contrast. */
+.logos-track-reverse {
+  animation: scrollLogosReverse 30s linear infinite;
+}
+
+/* Role: Individual logo item box — sizing and hover lift effect. */
+.logo-item {
+  flex-shrink: 0;
+  width: 180px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: all 0.4s ease;
+}
+
+.logo-item:hover {
+  transform: translateY(-5px);
+}
+
+.logo-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: all 0.4s ease;
+}
+
+.logo-item:hover img {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Role: Keyframes that move the logo track left and back for an infinite loop visual effect. */
+@keyframes scrollLogos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollLogosReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Role: Small utility gallery and card styles used elsewhere on the page for additional content displays. */
+/* main.content { background: #001826; padding: 64px 56px; color: #fff; } */
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; margin-top: 12px; }
+.card { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; transition: transform 0.3s ease; }
+.card:hover { transform: translateY(-5px); }
+.card img { width:100%; display:block; border-radius: 6px; }
+footer { padding: 36px 56px; color: rgba(255,255,255,0.65); background: #00101a; }
+
+/* Role: Responsive adjustments for smaller screens — font scaling, spacing reductions, and hero behavior tweaks. */
+@media (max-width:900px) {
+  .headline { font-size: 2rem; }
+  .hero { padding: 20px; height: 100vh; }
+  .video-container { width: 100%; height: 100vh; }
+  .hero-section { height: 100vh; }
+  .hero-overlay { left: 20px; bottom: 20px; max-width: calc(100% - 40px); margin-left: 0; padding: 32px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: 1fr; }
+  .about-title { font-size: 2.2rem; }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .scroll-instruction {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+   
+
+}

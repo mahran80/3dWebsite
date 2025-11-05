@@ -263,6 +263,8 @@ nav a:hover { color: #04e3b2; }
   display: block;
 }
 
+.services-section { background: linear-gradient(135deg, #001826, #002235); padding: 80px 56px; position: relative; }
+.services-container { max-width: 1200px; margin: 0 auto; }
 
 /* Role: Services title section layout; centers content vertically and provides generous padding for large screens. */
 .services-title {

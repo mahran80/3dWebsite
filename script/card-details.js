@@ -1,5 +1,5 @@
 // card-details.js - Complete Project Details System (updated to support multiple videos)
-// Videos containers now get an inline height (300px) so all videos appear like images.
+// Videos containers now get an inline height (300px) all videos appear like images.
 
 const projectsData = {
   'project-1': {

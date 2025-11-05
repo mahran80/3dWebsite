@@ -30,8 +30,9 @@
     </div>
     <!-- Role: Primary navigation links to key sections and contact page. -->
     <nav>
-      <a href="#about">SOLUTIONS</a>
-      <a href="#case">OUR SERVICES</a>
+      <a href="#about">ABOUT</a>
+      <a href="#services">SERVICES</a>
+      <a href="#case">CASE STUDY</a>
       <!-- <a href="news.html">NEWS</a> -->
       <!-- <a href="#team">TEAM</a> -->
       <a href="contact.html">CONTACT</a>
@@ -72,7 +73,7 @@
   </div>
 
   <!-- Role: Services / Hero supporting title section. Provides an introductory headline and descriptive paragraph explaining company offering and digital twin concept. -->
-<section class="services-title">
+<section class="services-title" >
   <div class="services-title-container">
     <!-- Main title -->
     <h2 class="services-main-title" data-services-animate>
@@ -94,7 +95,12 @@
 
     <!-- Role: Section containing an iframe named 'season.html' likely used for seasonal demos, interactive visualizations, or embedded content. Placing complex visual demos inside an iframe isolates styles and scripts. -->
     <div class="season-container">
-    <iframe
+      <div class="season-text">
+      Get Total Visibility: Your Operations in Real-Time.
+
+The Digital Twin is the revolutionary technology that gives you unprecedented, crystal-clear control over every aspect of your asset lifecycle. By blending sensor data, AI, and advanced visualization, this digital replica helps you monitor performance, run predictive maintenance, and make data-driven decisions—all in one visual environment. Stop wrestling with spreadsheets and static reports
+      </div>
+      <iframe
         src="season.html"
         allowfullscreen
         allow="autoplay">
@@ -124,14 +130,223 @@
       </div>
 
       <!-- Role: Grid of service offerings. Each card highlights a core service with icon, title and brief description. -->
-      <div class="services-grid">
-        <div class="service-card"><div class="service-icon">🎬</div><h3 class="service-title">Video Production</h3><p class="service-desc">Professional high-quality video production for companies and institutions using the latest techniques and equipment.</p></div>
-        <div class="service-card"><div class="service-icon">🎮</div><h3 class="service-title">3D Modeling</h3><p class="service-desc">Design and production of realistic 3D models for products, buildings, and characters.</p></div>
-        <div class="service-card"><div class="service-icon">🥽</div><h3 class="service-title">Virtual Reality</h3><p class="service-desc">Development of interactive virtual and augmented reality experiences for training and marketing.</p></div>
-        <div class="service-card"><div class="service-icon">✨</div><h3 class="service-title">Visual Effects</h3><p class="service-desc">Adding advanced visual effects and animations for films and advertisements.</p></div>
-      </div>
-    </div>
+      <div class="services-grid" id="services">
+  <div class="service-card">
+    <div class="service-icon">🏛️</div>
+    <h3 class="service-title">Hyper-Realistic Architectural 3D Visualization & Media Productions</h3>
+    <p class="service-desc">Photoreal 3D renders, walkthroughs and media for architecture, real estate and presentations.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon">🌐</div>
+    <h3 class="service-title">Interactive 3D & Web Experiences</h3>
+    <p class="service-desc">Immersive WebGL experiences, interactive product demos and real-time 3D applications for web.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon">🏙️</div>
+    <h3 class="service-title">Urban & Infrastructure Digital Twins</h3>
+    <p class="service-desc">Accurate digital replicas of urban environments for simulation, planning and monitoring.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon">📊</div>
+    <h3 class="service-title">Energy & Environmental Analytics</h3>
+    <p class="service-desc">Data-driven analysis for energy efficiency, emissions monitoring and sustainability reporting.</p>
+  </div>
+
+  <div class="service-card">
+    <div class="service-icon">🤖</div>
+    <h3 class="service-title">AI-Enhanced Urban Intelligence & IoT Management</h3>
+    <p class="service-desc">AI-powered analytics, sensor integration and centralized management for smart-city IoT systems.</p>
+  </div>
+<div class="service-card">
+  <div class="service-icon">🥽</div>
+  <h3 class="service-title">Virtual Reality</h3>
+  <p class="service-desc">Development of interactive virtual and augmented reality experiences for training and marketing.</p>
+</div>
+</div>
+
+
   </section>
+
+  <!-- Role: Case-study / portfolio section showcasing selected projects. Each card links to a detailed case study page using query parameters. -->
+<!-- case-study Section - Updated with Links -->
+<section class="case-study" id="case">
+  <div class="case-study-container">
+    <!-- Section Header -->
+    <h2 class="case-study-title">Case Study</h2>
+    
+    <!-- Case-Study Grid -->
+    <div class="work-grid">
+      
+      <!-- Card 1: Residential Complex project. Link includes id query for details page to load content dynamically. -->
+      <a href="card-details.html?id=project-1" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service4.png" alt="Building & Infrastructure Twins">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Work Flow: Open-Plan Office Visualization</div>
+          <h3 class="work-card-title">Interior Design- 3D Visualization</h3>
+          <p class="work-card-description">
+            A daylight-driven office render showcasing balanced artificial and natural light distribution. Visualization developed from basic 2D plans to test how ceiling fixtures and window systems impact working environments.
+          </p>
+          <!-- <div class="work-card-tags">
+            <span class="work-tag">Building Management</span>
+            <span class="work-tag">Energy Efficiency</span>
+            <span class="work-tag">IoT Integration</span>
+          </div> -->
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Card 2: Villa / Hyper-Realistic Visuals project. -->
+      <a href="card-details.html?id=project-2" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/work2.png" alt="Hyper-Realistic Visuals">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">LUXMOD: A Contemporary Villa Study</div>
+          <h3 class="work-card-title">Architectural Design & 3D Visualization</h3>
+          <p class="work-card-description">
+            A calm residential corner with a nod to Tudor architecture. This 3D visualization emphasizes light, composition, and environment to bring architectural intent to life.
+          </p>
+          <!-- <div class="work-card-tags">
+            <span class="work-tag">Real Estate</span>
+            <span class="work-tag">Residential</span>
+            <span class="work-tag">Visualization</span>
+          </div> -->
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Card 3: Urban planning digital twin project. Links to details via id query. -->
+      <a href="card-details.html?id=project-3" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service5.png" alt="Urban Planning Digital Twin">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Urban-Architecture Design and Visualizing</div>
+          <h3 class="work-card-title">Verde Haven: A Countryside Escape.</h3>
+          <p class="work-card-description">
+            Complete Villa visualization project in a countryside, including modeling, texturing, lighting, and rendering—all executed in multiple urban & 3D applications. Designed to reflect comfort, sophistication, and balance.
+          </p>
+          <!-- <div class="work-card-tags">
+            <span class="work-tag">Urban Planning</span>
+            <span class="work-tag">Visualization</span>
+            <span class="work-tag">Simulation</span>
+          </div> -->
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Card 4: AI-enhanced analytics project for parking/solar/energy scenarios. -->
+      <a href="card-details.html?id=project-4" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/service3.png" alt="AI-Enhanced Analytics">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Smart City Solutions</div>
+          <h3 class="work-card-title">DigitalTwin-Urban-SmartCity-Animation-GIS</h3>
+          <p class="work-card-description">
+            Urban visualization turned into a game-style navigation experience. The project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digitaltwinning purposes.
+          </p>
+          <!-- <div class="work-card-tags">
+            <span class="work-tag">Automated Parking Lot</span>
+            <span class="work-tag">Solar Panels</span>
+            <span class="work-tag">User Energy Cost Estimation</span>
+            <span class="work-tag">Digital Twin</span>
+          </div> -->
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+      <!-- Card 1: Residential Complex project. Link includes id query for details page to load content dynamically. -->
+      <a href="card-details.html?id=project-5" class="work-card" data-work-animate>
+        <div class="work-card-image">
+          <img src="res/work54.png" alt="Building & Infrastructure Twins">
+          <div class="work-card-overlay">
+            <div class="work-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-content">
+          <div class="work-card-category">Realtime Render, Interactive VR, 3D Visualization</div>
+          <h3 class="work-card-title">Immersive Motion: Real-Time VR & Cinematic Shots</h3>
+          <p class="work-card-description">
+            This real-time city environment blends technical accuracy with visual clarity. Optimized assets and performance settings were tuned for an Unreal Engine navigation tool that feels like an open-world game.
+          </p>
+          <!-- <div class="work-card-tags">
+            <span class="work-tag">Building Management</span>
+            <span class="work-tag">Energy Efficiency</span>
+            <span class="work-tag">IoT Integration</span>
+          </div> -->
+          <span class="work-card-link">
+            Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+</section>
+
 
 <!-- Role: Clients section to showcase partner logos and provide social proof. Uses a continuous slider track for seamless logo animation. -->
 <section class="clients-section">
@@ -257,152 +472,6 @@
   </div>
 </section>
 
-  <!-- Role: Case-study / portfolio section showcasing selected projects. Each card links to a detailed case study page using query parameters. -->
-<!-- case-study Section - Updated with Links -->
-<section class="case-study" id="case">
-  <div class="case-study-container">
-    <!-- Section Header -->
-    <h2 class="case-study-title">Our Services — Case Study</h2>
-    
-    <!-- Case-Study Grid -->
-    <div class="work-grid">
-      
-      <!-- Card 1: Residential Complex project. Link includes id query for details page to load content dynamically. -->
-      <a href="card-details.html?id=project-1" class="work-card" data-work-animate>
-        <div class="work-card-image">
-          <img src="res/service1.png" alt="Building & Infrastructure Twins">
-          <div class="work-card-overlay">
-            <div class="work-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="work-card-content">
-          <div class="work-card-category">Residential Complex</div>
-          <h3 class="work-card-title">Building & Infrastructure Twins</h3>
-          <p class="work-card-description">
-            Create digital replicas of buildings and infrastructure for optimized maintenance, energy efficiency, and space utilization.
-          </p>
-          <div class="work-card-tags">
-            <span class="work-tag">Building Management</span>
-            <span class="work-tag">Energy Efficiency</span>
-            <span class="work-tag">IoT Integration</span>
-          </div>
-          <span class="work-card-link">
-            Case Study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Card 2: Villa / Hyper-Realistic Visuals project. -->
-      <a href="card-details.html?id=project-2" class="work-card" data-work-animate>
-        <div class="work-card-image">
-          <img src="res/service2.png" alt="Hyper-Realistic Visuals">
-          <div class="work-card-overlay">
-            <div class="work-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="work-card-content">
-          <div class="work-card-category">Villa</div>
-          <h3 class="work-card-title">Hyper-Realistic Visuals</h3>
-          <p class="work-card-description">
-            We create photorealistic renders, animations, and interactive visuals that make spaces feel real—turning concepts into emotions and helping your project sell itself.
-          </p>
-          <div class="work-card-tags">
-            <span class="work-tag">Real Estate</span>
-            <span class="work-tag">Residential</span>
-            <span class="work-tag">Visualization</span>
-          </div>
-          <span class="work-card-link">
-            Case Study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Card 3: Urban planning digital twin project. Links to details via id query. -->
-      <a href="card-details.html?id=project-3" class="work-card" data-work-animate>
-        <div class="work-card-image">
-          <img src="res/service3.png" alt="Urban Planning Digital Twin">
-          <div class="work-card-overlay">
-            <div class="work-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="work-card-content">
-          <div class="work-card-category">North European Metropolitan Authority</div>
-          <h3 class="work-card-title">Urban Planning Digital Twin</h3>
-          <p class="work-card-description">
-            Urban visualization turned into a game-style navigation experience. This project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digital/Infinity purposes.
-          </p>
-          <div class="work-card-tags">
-            <span class="work-tag">Urban Planning</span>
-            <span class="work-tag">Visualization</span>
-            <span class="work-tag">Simulation</span>
-          </div>
-          <span class="work-card-link">
-            Case Study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Card 4: AI-enhanced analytics project for parking/solar/energy scenarios. -->
-      <a href="card-details.html?id=project-4" class="work-card" data-work-animate>
-        <div class="work-card-image">
-          <img src="res/service4.png" alt="AI-Enhanced Analytics">
-          <div class="work-card-overlay">
-            <div class="work-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="work-card-content">
-          <div class="work-card-category">University Parking, Government Building</div>
-          <h3 class="work-card-title">AI-Enhanced Analytics</h3>
-          <p class="work-card-description">
-            Apply machine learning to your digital twin data for predictive insights, anomaly detection, and automated decision support.
-          </p>
-          <div class="work-card-tags">
-            <span class="work-tag">Automated Parking Lot</span>
-            <span class="work-tag">Solar Panels</span>
-            <span class="work-tag">User Energy Cost Estimation</span>
-            <span class="work-tag">Digital Twin</span>
-          </div>
-          <span class="work-card-link">
-            Case Study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
 
   <!-- Role: Footer with copyright & dynamic year span. The #year element is likely populated by script/script.js at runtime. -->
   <footer>© <span id="year"></span> 3DXENON— all rights reserved</footer>

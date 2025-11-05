@@ -199,39 +199,34 @@ nav a:hover { color: #04e3b2; }
 .hero-section.show-overlay .hero-overlay { opacity: 1; transform: translateY(0); }
 
 /* Role: Container for the 'season' demo iframe — provides full-height layout and background. */
-.season-container{
+.season-container {
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  /* margin: 15px auto; */
-  padding: 0;
+  display: grid;
+  margin: 0;
+  padding: 60px 40px;
   border: none;
-  background-color: #03293b;
+  background-color: #001826;
   position: relative;
-  /* max-width: none;  */
-  /* border-radius: 0;  */
-  /* overflow-y: auto;  */
-  /* box-shadow: none;  */
-  /* scroll-behavior: smooth ; 
-  scroll-snap-type: y mandatory; 
-  overscroll-behavior: contain; 
-  -webkit-overflow-scrolling: touch; */
-  /* transform: translateY(100vh); */
-  /* opacity: 0; */
-  /* transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease; */
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
 }
 
-/* Role: Styling for the iframe placed inside the season container — full-bleed, min-height for smaller viewports and subtle elevation via box-shadow. */
-.season-container iframe {
-        overflow: hidden;
-        width: 100%;
-        height: 100vh;
-        min-height: 600px;
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        background-color: #03293b;
+.season-text { 
+  font-size: 1.1rem; 
+  line-height: 1.8; 
+  opacity: 0.9; 
+  color: rgba(255, 255, 255, 0.85);
 }
+
+.season-container iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+  background-color: #001826;
+  display: block;
+}
+
 
 /* Role: Services title section layout; centers content vertically and provides generous padding for large screens. */
 .services-title {

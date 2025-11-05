@@ -1,282 +1,233 @@
-// card-details.js - Complete Project Details System
-
+// card-details.js - Complete Project Details System (updated to support multiple videos)
+// Videos containers now get an inline height (300px) so all videos appear like images.
 
 const projectsData = {
   'project-1': {
     id: 'project-1',
-    category: 'Residential Complex',
-    title: 'Building & Infrastructure Twins',
-    image: 'res/service1.png',
-    overview: `Project Description
-Our comprehensive smart building optimization project transformed a global office complex into an energy-efficient, intelligent workspace. By implementing our advanced digital twin platform, we created a virtual replica of the entire building infrastructure, enabling real-time monitoring and optimization of HVAC systems, lighting, and energy consumption patterns. The project resulted in a remarkable 28% reduction in energy consumption while maintaining optimal comfort levels for occupants.
+    category: 'Work Flow: Open-Plan Office Visualization',
+    title: 'Interior Design- 3D Visualization',
+    image: 'res/service4.png',
+    overview: `
+    A daylight-driven office render showcasing balanced artificial and natural light distribution. Visualization developed from basic 2D plans to test how ceiling fixtures and window systems impact working environments.`,
+    challenge: `
+    The Challenges
+    •
+    Translating 2D architectural plans into a fully realized 3D environment.
+    •
+    Achieving balanced lighting conditions that replicate real-world daylight behavior.
+    •
+    Ensuring visual comfort and realistic material reflections within the office space.`,
+    solution: `
+    •
+    Modeled complete interior layout from 2D CAD references with precision.
+    •
+    Simulated daylight and artificial light systems to analyze luminance distribution.
+    •
+    Applied realistic textures and materials to enhance the visual fidelity of surfaces and furniture.`,
+    results: `
+    Resolution & Impact
+    The final renders delivered a professional and accurate visualization of a modern office atmosphere, enabling the client to make informed decisions on lighting and layout design.
 
-Project Overview
-Our digital twin projects cover a full lifecycle approach:
-
-Buildings: Residential, commercial, or public buildings can be digitally mirrored for operational efficiency.
-
-Infrastructure: Bridges, roads, and utilities are modeled to monitor performance, resilience, and future upgrades.
-
-Urban context: Every project is connected to its geospatial environment, enabling better city-scale planning.`,
-    challenge: `The Challenges
-•
-Managing complex buildings and infrastructure comes with big challenges:
-•
-Fragmented data scattered across drawings, BIM models, and monitoring systems.
-•
-Limited visibility into performance, energy consumption, and maintenance needs.
-•
-Difficulty simulating future scenarios such as expansions, traffic changes, or energy upgrades.
-•
-Slow decision-making due to reliance on static reports instead of live, interactive insights.`,
-    solution: `Our Solutions
-•
-We develop Building & Infrastructure Digital Twins that merge design data, real-time sensor inputs, and geospatial context into one interactive 3D environment.
-•
-Structured, georeferenced 3D models ready for digital twin platforms.
-•
-IoT & sensor integration for monitoring energy, occupancy, and safety in real time.
-•
-Simulation & scenario testing to predict impacts of design or operational changes.
-•
-User-friendly dashboards & 3D navigation for facility managers, planners, and stakeholders.`,
-    results: `Resolution & Impact
-By turning static assets into living, digital replicas, we help clients achieve:
-
-Smarter operations → Lower energy costs, predictive maintenance, and optimized resource use.
-
-Informed decision-making → Clear visualization and reliable data drive better investments.
-
-Sustainability goals → Track and reduce carbon footprint effectively.
-
-Public engagement → Citizens and stakeholders understand projects through clear 3D communication.
-
-Outcome: 28% reduction in energy consumption and improved operational efficiency.`,
-    client: 'Private Developer',
-    industry: 'Real Estate',
-    duration: '8 months',
-    year: '2024',
-    technologies: ['IoT Integration', 'BIM', 'Machine Learning', 'Real-time Analytics', 'Cloud Computing'],
+    Outcome: Improved lighting plan validation and enhanced interior presentation quality.`,
+    technologies: ['3ds Max', 'Corona Renderer', 'Photoshop', 'Interior Lighting Simulation'],
     services: [
-      '3D Modeling & Visualization',
-      'IoT Sensor Integration',
-      'Predictive Analytics',
-      'Energy Management System',
-      'Maintenance Dashboard',
-      'Mobile App Development'
+      'Interior 3D Visualization',
+      'Lighting Simulation',
+      'Material Realism Enhancement',
+      '2D to 3D Conversion',
+      'Design Presentation Rendering'
     ],
     gallery: [
-      'res/work1.png',
-      'res/work11.png',
-      'res/work12.png',
+      'res/work45.png',
+      'res/work4.png',
+      'res/work42.png',
       'res/work43.png'
-    ]
+    ],
+    // youtubeVideo: 'https://www.youtube.com/embed/aatmjpEnf2E'
   },
   
   'project-2': {
     id: 'project-2',
-    category: 'Villa',
-    title: 'Hyper-Realistic Visuals',
-    image: 'res/service2.png',
-    overview: `Project Description
-We partnered with a leading automotive manufacturer to create a comprehensive digital twin of their assembly line operations. This project involved mapping every aspect of the production process, from individual machine performance to overall workflow optimization. The digital twin enabled predictive maintenance, real-time process monitoring, and data-driven decision making.
+    category: 'LUXMOD: A Contemporary Villa Study',
+    title: 'Architectural Design & 3D Visualization',
+    image: 'res/work2.png',
+    overview: `
+    A calm residential corner with a nod to Tudor architecture. This 3D visualization emphasizes light, composition, and environment to bring architectural intent to life.`,
+    challenge: `
+    The Challenges
+    •
+    Achieving realistic lighting and material reflection to highlight Tudor architectural elements.
+    •
+    Balancing artistic composition with architectural accuracy.
+    •
+    Creating a calm yet dynamic environment that conveys a sense of comfort and luxury.`,
+    solution: `
+    •
+    Developed detailed 3D models inspired by Tudor-style design principles.
+    •
+    Used advanced rendering techniques to emphasize natural lighting and realistic textures.
+    •
+    Optimized environment setup for depth, balance, and immersive visual storytelling.`,
+    results: `
+    Resolution & Impact
+    The project successfully delivered a highly realistic visualization that communicates both architectural precision and aesthetic elegance.
 
-Project Overview
-Our visuals are tailored to different project types:
-
-Interior spaces with styled furniture, textures, and lighting mood boards.
-
-Exterior architecture including realistic landscapes, urban surroundings, and climate effects.
-
-Marketing-ready packages for brochures, presentations, and online campaigns.
-
-Custom interactive experiences that add engagement to exhibitions or client pitches.`,
-    challenge: `The Challenges
-•
-Architectural ideas often fail to impress when shown as plain drawings or technical models.
-•
-Investors and clients struggle to imagine the final look and feel of a project.
-•
-Marketing materials can feel flat without high-quality visuals to inspire confidence.
-•
-Adjusting designs late in the process becomes costly and time-consuming.`,
-    solution: `Our Solutions
-•
-We create hyper-realistic 3D visuals that bridge imagination and reality:
-•
-Photorealistic still renders that capture every material, shadow, and reflection.
-•
-Cinematic animations that showcase projects with storytelling and atmosphere.
-•
-Interactive scenes where clients can explore spaces, change options, or view from different perspectives.
-•
-Fast iteration cycles to test materials, lighting, and layouts before construction begins.`,
-    results: `Resolution & Impact
-By turning ideas into immersive visual experiences, we deliver:
-
-Stronger marketing tools → Designs that sell themselves before construction.
-
-Better decision-making → Stakeholders can see and feel the project, not just imagine it.
-
-Cost savings → Detect design conflicts and material mismatches early.
-
-Memorable presentations → Images and animations that stand out and win projects.`,
-    client: 'Luxury Real Estate Developer',
-    industry: 'Residential',
-    duration: '5 months',
-    year: '2024',
-    technologies: ['Unreal Engine', 'Ray Tracing', 'VR/AR', '3D Scanning', 'Real-time Rendering'],
+    Outcome: Enhanced client presentation and improved visualization workflow for residential design projects.`,
+    technologies: ['3ds Max', 'Corona Renderer', 'Photoshop', 'Architectural Visualization'],
     services: [
-      'Photorealistic 3D Rendering',
-      'Interactive Walkthroughs',
-      'Virtual Reality Experience',
-      'Material Customization',
+      '3D Exterior Visualization',
+      'Architectural Rendering',
       'Lighting Simulation',
-      'Animation & Videos'
+      'Material Optimization',
+      'Concept Design Presentation'
     ],
     gallery: [
       'res/work2.png',
-      'res/work21.png',
-      'res/work22.png',
-      'res/work23.png'
-    ]
+      'res/work23.png',
+      'res/work26.png',
+      'res/work25.png'
+    ],
+    // youtubeVideo: 'https://www.youtube.com/embed/4EXFOUzy1eE'
   },
   
   'project-3': {
     id: 'project-3',
-    category: 'North European Metropolitan Authority',
-    title: 'Urban Planning Digital Twin',
-    image: 'res/service3.png',
-    overview: `Project Description
-This innovative urban planning project transformed traditional city visualization into an immersive, game-style navigation experience. Working with the Metropolitan Transportation Authority, we created a comprehensive digital twin of urban infrastructure that allows stakeholders to explore and analyze transportation networks through an interactive 3D environment built in Unreal Engine.
+    category: 'Urban-Architecture Design and Visualizing',
+    title: ' Verde Haven: A Countryside Escape.',
+    image: 'res/service5.png',
+    overview: `
+    Complete Villa visualization project in a countryside, including modeling, texturing, lighting, and rendering—all executed in multiple urban & 3D applications. Designed to reflect comfort, sophistication, and balance.`,
+    challenge: `
+    The Challenges
+    •
+    Coordinating assets and workflows across multiple 3D and urban design applications.
+    •
+    Modeling and integrating realistic landscape and vegetation around the villa.
+    •
+    Creating high-quality textures and materials that read well at close and distance views.
+    •
+    Balancing render quality with reasonable render times for large exterior scenes.`,
+    solution: `
+    •
+    Implemented a multi-application pipeline for modeling, texturing, and scene assembly.
+    •
+    Used instancing and optimized vegetation workflows to populate the landscape efficiently.
+    •
+    Applied layered PBR materials and detailed texture work for realism.
+    •
+    Tuned lighting rigs and render settings to achieve photoreal exterior illumination and manageable render times.`,
+    results: `
+    Resolution & Impact
+    The project delivered a cohesive and highly realistic countryside villa visualization that communicates comfort and sophistication, aiding client decision-making and marketing materials.
 
-Project Overview
-Our approach covers:
-
-Urban planning twins → Modeling districts, neighborhoods, and transport systems.
-
-Environmental twins → Simulating ecosystems, water flows, and renewable energy potential.
-
-Regional scale integration → Linking cities with surrounding landscapes for holistic impact analysis.
-
-Public participation tools → Interactive 3D maps and VR demos for better community engagement.`,
-    challenge: `The Challenges
-•
-Cities and regions face growing pressure from climate change, rapid urbanization, and resource management.
-•
-Traditional maps and reports lack the ability to fully capture dynamic environmental processes like air quality, flooding, or traffic emissions.
-•
-Decision-making often happens in silos, with fragmented data spread across agencies and stakeholders.
-•
-Engaging citizens and policymakers is difficult when complex data isn’t visualized clearly.`,
-    solution: `Our Solutions
-•
-We build Urban & Environment Digital Twins that connect geospatial data, 3D city models, and live environmental inputs into one interactive platform.
-•
-City-scale 3D twins that integrate buildings, infrastructure, and natural landscapes.
-•
-Environmental simulations (air quality, noise, flooding, energy use, mobility).
-•
-Scenario testing for climate adaptation, zoning, and sustainable growth strategies.
-•
-Citizen-facing dashboards that make data transparent, interactive, and easy to understand.`,
-    results: `Resolution & Impact
-Urban & Environment Twins enable cities and organizations to:
-
-Plan sustainably → Reduce emissions, optimize mobility, and protect green areas.
-
-Mitigate risks → Anticipate flooding, heatwaves, or pollution hotspots before they happen.
-
-Collaborate better → Unite planners, engineers, and citizens around a shared digital environment.
-
-Build trust → Transparent and visual communication strengthens public acceptance of projects.`,
-    client: 'Metropolitan Planning Authority',
-    industry: 'Urban Development',
-    duration: '12 months',
-    year: '2023-2024',
-    technologies: ['Unreal Engine', 'GIS Integration', 'Traffic Simulation', 'Environmental Modeling', 'Big Data Analytics'],
+    Outcome: Enhanced presentation assets, faster stakeholder approvals, and an optimized exterior visualization workflow.`,
+    technologies: ['3ds Max', 'Corona Renderer', 'Substance Painter', 'Photoshop', 'Forest Pack'],
     services: [
-      'Urban 3D Modeling',
-      'Traffic Flow Simulation',
-      'Environmental Impact Analysis',
-      'Public Engagement Tools',
-      'Scenario Planning',
-      'Data Visualization'
+      'Villa Exterior Visualization',
+      'Landscape & Vegetation Modeling',
+      'Material & Texture Creation',
+      'Lighting & Exterior Rendering',
+      'Post-production & Compositing'
     ],
     gallery: [
-      'res/work3.png',
-      'res/work51.png',
-      'res/work32.png',
-      'res/work5.png'
-    ]
+      'res/work21.png',
+      'res/work22.png',
+      'res/work24.png'
+    ],
+    youtubeVideo: 'https://www.youtube.com/embed/BkeSDTYeY50'
+    
   },
   
   'project-4': {
     id: 'project-4',
-    category: 'University Parking, Government Building',
-    title: 'AI-Enhanced Analytics',
-    image: 'res/service4.png',
-    overview: `Project Description
-This innovative urban planning project transformed traditional city visualization into an immersive, game-style navigation experience. Working with the Metropolitan Transportation Authority, we created a comprehensive digital twin of urban infrastructure that allows stakeholders to explore and analyze transportation networks through an interactive 3D environment built in Unreal Engine.
+    category: 'Smart City Solutions',
+    title: 'DigitalTwin-Urban-SmartCity-Animation-GIS',
+    image: 'res/service3.png',
+    overview: `
+    Urban visualization turned into a game-style navigation experience. The project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digitaltwinning purposes.
+    An interactive city-scale simulation built in Unreal Engine with real GIS, BIM, and photogrammetry data.
 
-Project Overview
-Our AI-enhanced analytics can be applied across scales:
+    The urban simulation showcases:
+    ✅ First-person & fly-through exploration
+    ✅ AI-driven pedestrian crowds
+    ✅ Smart traffic logic — cars stop for pedestrians
+    ✅ Indoor & outdoor navigation
+    ✅ Green spaces, rivers, and infrastructure layers
 
-Smart Buildings → Optimize HVAC, lighting, occupancy flows, and predictive maintenance.
+    This project proves how Digital Twins can support urban planning, mobility studies, climate action, and citizen engagement.`,
+    challenge: `
+    The Challenges
+    •
+    Integrating large-scale GIS, BIM, and photogrammetry datasets into a single optimized Unreal Engine environment.
+    •
+    Creating AI-driven behaviors for pedestrians and vehicles with realistic logic.
+    •
+    Balancing visual fidelity and performance for smooth real-time navigation.
+    •
+    Ensuring accuracy of geospatial context while maintaining interactivity.`,
+    solution: `
+    •
+    Streamlined GIS and BIM data pipelines and optimized assets for real-time rendering.
+    •
+    Developed AI logic for traffic and pedestrian systems to simulate realistic city movement.
+    •
+    Implemented LOD systems and texture streaming to maintain performance.
+    •
+    Added interactive layers for smart city features such as mobility, energy, and climate visualization.`,
+    results: `
+    Resolution & Impact
+    The Smart City Simulation demonstrated how immersive, data-driven digital twins can revolutionize urban planning and citizen engagement.
 
-Smart Cities → Enhance traffic management, public safety, energy distribution, and sustainability tracking.
-
-Integrated Digital Twins → Combine real-time sensor data with AI simulations for what-if scenario testing.`,
-    challenge: `The Challenges
-•
-Cities and building operators generate huge volumes of data from sensors, IoT devices, and management systems.
-•
-Without AI, much of this data stays underutilized, offering little insight for real-time decisions.
-•
-Complex systems (traffic, energy, utilities, building operations) are difficult to predict and optimize manually.
-•
-Stakeholders need clear insights instead of raw data streams.`,
-    solution: `Our Solutions
-•
-We integrate AI-driven analytics directly into Digital Twin platforms, turning data into actionable intelligence:
-•
-Predictive analytics → Anticipate maintenance needs, energy peaks, or traffic bottlenecks before they occur.
-•
-Anomaly detection → Identify unusual patterns in energy use, safety systems, or environmental conditions.
-•
-Optimization algorithms → Suggest efficient layouts, zoning changes, or building operations strategies.
-•
-AI-powered dashboards → Simplify complex data into clear KPIs and visual reports for decision-makers.`,
-    results: `Resolution & Impact
-By embedding AI into Digital Twins, we deliver:
-
-• Smarter decisions → Real-time data translated into reliable forecasts and recommendations.
-
-• Operational savings → Lower maintenance costs, reduced downtime, and optimized resource use.
-
-• Sustainability gains → Better energy efficiency and measurable carbon footprint reductions.
-
-• Future readiness → Systems that continuously learn and improve as more data flows in.`,
-    client: 'State University & Government',
-    industry: 'Smart Infrastructure',
-    duration: '10 months',
-    year: '2024',
-    technologies: ['AI/ML', 'Solar Energy Management', 'EV Charging Systems', 'IoT Sensors', 'Predictive Analytics'],
+    Outcome: Improved decision-making, enhanced communication with stakeholders, and a scalable framework for smart urban development.`,
+    technologies: ['Unreal Engine', 'GIS Integration', 'BIM', 'Photogrammetry', 'AI Simulation', 'Blueprint Scripting'],
     services: [
-      'Automated Parking System',
-      'Solar Panel Optimization',
-      'EV Charging Management',
-      'Energy Cost Analysis',
-      'User Mobile App',
-      'Digital Twin Platform'
+      'Digital Twin Development',
+      'Urban Simulation & Visualization',
+      'Real-time GIS Integration',
+      'AI-driven Traffic & Crowd Systems',
+      'Interactive 3D Navigation',
+      'Smart City Data Visualization'
     ],
     gallery: [
-      'res/work4.png',
-      'res/work41.png',
-      'res/work42.png',
-      'res/work43.png'
+      'res/work51.png',
+      'res/work52.png',
+      'res/work53.png'
+    ],
+    youtubeVideo: 'https://www.youtube.com/embed/4EXFOUzy1eE'
+  },
+
+  // NEW project - shows 3 videos and 1 image when opened
+  'project-5': {
+    id: 'project-5',
+    category: 'Realtime Render, Interactive VR, 3D Visualization',
+    title: 'Immersive Motion: Real-Time VR & Cinematic Shots',
+    image: 'res/work54.png',
+    overview: `
+    This real-time city environment blends technical accuracy with visual clarity. Optimized assets and performance settings were tuned for an Unreal Engine navigation tool that feels like an open-world game.`,
+    challenge: `
+    Balancing technical fidelity with runtime performance for VR and cinematic-quality camera shots in an interactive environment.`,
+    solution: `
+     Delivered a responsive VR-ready city demo with cinematic flythroughs and real-time responsiveness suitable for demos and stakeholder walkthroughs.`,
+    results: `
+    A compact, media-rich case study ready for embedding in the portfolio.`,
+    technologies: ['Unreal Engine', 'Realtime Rendering', 'VR Interaction', 'Cinematic Camera Rigs'],
+    services: [
+    'Realtime City Visualization',
+    'VR Integration & Interaction',
+    'Cinematic Camera Design',
+    'Performance Optimization'
+    ],
+    // single image in gallery
+    gallery: [
+      'res/work54.png'
+    ],
+    // multiple embedded YouTube videos (use embed URLs)
+    videos: [
+      'https://www.youtube.com/embed/WjNHqD8189U',
+      'https://www.youtube.com/embed/osl_WKUrdw8',
+      'https://www.youtube.com/embed/aGm-jkzsR4w'
     ]
-  }
+  },
 };
 
 // Get project ID from URL parameters
@@ -296,7 +247,7 @@ function loadProjectDetails() {
   }
   
   // Update page title
-  document.title = `${project.title} - ABDELRAHMAN EL KHATIB`;
+  document.title = `${project.title} - 3DXENON`;
   
   // Hero section
   document.getElementById('heroImage').src = project.image;
@@ -309,20 +260,58 @@ function loadProjectDetails() {
   document.getElementById('detailSolution').textContent = project.solution;
   document.getElementById('detailResults').textContent = project.results;
   
-  // NOTE: Project Details (client/industry/duration/year) and Technologies were removed from the page,
-  // so we no longer set them here to avoid errors.
-
   // Services
   const servicesContainer = document.getElementById('detailServices');
   servicesContainer.innerHTML = project.services.map(service => 
     `<li>${service}</li>`
   ).join('');
   
-  // Gallery
+  // Gallery with images and YouTube video(s)
   const galleryContainer = document.getElementById('detailGallery');
-  galleryContainer.innerHTML = project.gallery.map(img => 
-    `<img src="${img}" alt="${project.title}">`
-  ).join('');
+  
+  let galleryHTML = '';
+
+  // Add images from gallery array (if any)
+  if (project.gallery && project.gallery.length) {
+    galleryHTML += project.gallery.map(img => 
+      `<img src="${img}" alt="${project.title}">`
+    ).join('');
+  }
+
+  // If there is a 'videos' array, add each as an iframe
+  // NOTE: set inline height (300px) so video boxes match image height and all appear correctly
+  if (project.videos && project.videos.length) {
+    galleryHTML += project.videos.map(vUrl => `
+      <div class="video-container" style="height:300px;">
+        <iframe
+          src="${vUrl}"
+          title="YouTube video player"
+          frameborder="0"
+          loading="lazy"
+          style="width:100%; height:100%; border:0;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    `).join('');
+  } else if (project.youtubeVideo) {
+    // backward compatibility for single youtubeVideo field
+    galleryHTML += `
+      <div class="video-container" style="height:300px;">
+        <iframe
+          src="${project.youtubeVideo}" 
+          title="YouTube video player" 
+          frameborder="0" 
+          loading="lazy"
+          style="width:100%; height:100%; border:0;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    `;
+  }
+  
+  galleryContainer.innerHTML = galleryHTML;
   
   // Load related projects
   loadRelatedProjects(projectId);
@@ -332,7 +321,7 @@ function loadProjectDetails() {
 function loadRelatedProjects(currentProjectId) {
   const relatedContainer = document.getElementById('relatedProjects');
   const allProjects = Object.values(projectsData);
-  const relatedProjects = allProjects.filter(p => p.id !== currentProjectId).slice(0, 3);
+  const relatedProjects = allProjects.filter(p => p.id !== currentProjectId).slice(0, 4);
   
   relatedContainer.innerHTML = relatedProjects.map(project => `
     <a href="card-details.html?id=${project.id}" class="related-card">

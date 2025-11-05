@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="css/season.css">
 </head>
 <body>
-    <!-- Main container matching hero style -->
+    <!-- Main container -->
     <div class="seasonal-hero">
+        <!-- Video Container -->
         <div class="seasonal-container">
             <!-- All videos playing simultaneously, stacked on top of each other -->
             <video id="video-spring" class="season-video active" muted loop playsinline>
@@ -23,45 +24,29 @@
             <video id="video-winter" class="season-video" muted loop playsinline>
                 <source src="res/winter.mp4" type="video/mp4">
             </video>
+        </div>
 
-            <!-- Controls overlay at bottom -->
-            <div class="controls-overlay">
-                <div class="season-icons">
-                     <div class="season-icon active" data-season="0">
-                        <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg> -->
-                        <span>spring</span>
-                    </div>
-                    <div class="season-icon" data-season="1">
-                        <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"/>
-                            <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1"/>
-                        </svg> -->
-                        <span>summer</span>
-                    </div>
-                    <div class="season-icon" data-season="2">
-                        <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                            <path d="M7.5 4.21l4.5 2.6 4.5-2.6m-9 15.58V14.6L3 12m18 0l-4.5 2.6v5.19M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
-                        </svg> -->
-                        <span>autumn</span>
-                    </div>
-                    <div class="season-icon" data-season="3">
-                        <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/>
-                            <path d="M12 9l-1 3-3 1 2 2-1 3 3-2 3 2-1-3 2-2-3-1z"/>
-                        </svg> -->
-                        <span>winter</span>
-                    </div>
+        <!-- Controls Below Video -->
+        <div class="controls-wrapper">
+            <div class="slider-container">
+                <input type="range" id="season-slider" min="0" max="3" value="0" step="1">
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
                 </div>
-                
-                <div class="slider-container">
-                    <input type="range" id="season-slider" min="0" max="3" value="0" step="1">
-                    <div class="slider-track">
-                        <div class="slider-fill"></div>
-                    </div>
+            </div>
+            
+            <div class="season-icons">
+                <div class="season-icon active" data-season="0">
+                    <span>Sunny</span>
+                </div>
+                <div class="season-icon" data-season="1">
+                    <span>Foggy</span>
+                </div>
+                <div class="season-icon" data-season="2">
+                    <span>Rainy</span>
+                </div>
+                <div class="season-icon" data-season="3">
+                    <span>Snowy</span>
                 </div>
             </div>
         </div>

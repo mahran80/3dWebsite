@@ -1,5 +1,5 @@
 // card-details.js - Complete Project Details System (updated to support multiple videos)
-// Videos containers now get an inline height (300px) all videos appear like images.
+// Videos containers now get an inline height (300px) so all videos appear like images.
 
 const projectsData = {
   'project-1': {
@@ -142,7 +142,7 @@ const projectsData = {
     id: 'project-4',
     category: 'Smart City Solutions',
     title: 'DigitalTwin-Urban-SmartCity-Animation-GIS',
-    image: 'res/service3.png',
+    image: 'res/service6.png',
     overview: `
     Urban visualization turned into a game-style navigation experience. The project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digitaltwinning purposes.
     An interactive city-scale simulation built in Unreal Engine with real GIS, BIM, and photogrammetry data.
@@ -189,18 +189,24 @@ const projectsData = {
       'Smart City Data Visualization'
     ],
     gallery: [
-      'res/work51.png',
-      'res/work52.png',
-      'res/work53.png'
+      // 'res/work51.png',
+      // 'res/work52.png',
+      // 'res/work53.png'
     ],
-    youtubeVideo: 'https://www.youtube.com/embed/4EXFOUzy1eE'
+    videos: [
+      'https://www.youtube.com/embed/4EXFOUzy1eE',
+      'https://player.vimeo.com/video/890274441',
+      'https://player.vimeo.com/video/1134040284',
+      'https://www.youtube.com/embed/WjNHqD8189U'
+    ]
+    
   },
 
   // NEW project - shows 3 videos and 1 image when opened
   'project-5': {
     id: 'project-5',
     category: 'Realtime Render, Interactive VR, 3D Visualization',
-    title: 'Immersive Motion: Real-Time VR & Cinematic Shots',
+    title: 'Immersive Motion: Real-Time VR & Simulations',
     image: 'res/work54.png',
     overview: `
     This real-time city environment blends technical accuracy with visual clarity. Optimized assets and performance settings were tuned for an Unreal Engine navigation tool that feels like an open-world game.`,
@@ -223,11 +229,58 @@ const projectsData = {
     ],
     // multiple embedded YouTube videos (use embed URLs)
     videos: [
-      'https://www.youtube.com/embed/WjNHqD8189U',
-      'https://www.youtube.com/embed/osl_WKUrdw8',
+      'https://www.youtube.com/embed/4EXFOUzy1eE',
+      'https://www.youtube.com/embed/aatmjpEnf2E',
       'https://www.youtube.com/embed/aGm-jkzsR4w'
     ]
   },
+  'project-6': {
+    id: 'project-6',
+    category: 'Tranquil Layers: A Contemporary Living-room Escape',
+    title: '3D Visualization',
+    image: 'res/service2.png',
+    overview: `
+    Subtle textures, layered lighting, and a calming palette come together in this Ultra Realistic 3D Living-room visualization.`,
+    challenge: `
+    The Challenges
+    •
+    Achieving harmony between textures, color palette, and light composition.
+    •
+    Reproducing realistic materials and reflections within a compact interior space.
+    •
+    Balancing soft ambient light with focused highlights to maintain depth and realism.`,
+    solution: `
+    •
+    Built a detailed 3D model emphasizing composition and spatial flow.
+    •
+    Used layered lighting setups to achieve both natural and artificial illumination.
+    •
+    Applied PBR-based materials and high-quality shaders for fabric, wood, and metal surfaces.
+    •
+    Final color grading and tone mapping completed in post-production for warmth and depth.`,
+    results: `
+    Resolution & Impact
+    The result is a serene, photorealistic interior visualization that highlights material quality and ambiance, helping clients envision their modern living spaces with clarity.
+
+    Outcome: Improved design presentation quality and a streamlined rendering workflow.`,
+    technologies: ['3ds Max', 'Vray', 'Photoshop', 'Lighting & Rendering'],
+    services: [
+      'Living-room 3D Visualization',
+      'Material & Texture Design',
+      'Lighting Composition',
+      'Post-production & Color Grading',
+      'Interior Detailing'
+    ],
+
+    gallery: [
+      'res/work3.png',
+      'res/work33.png',
+      'res/work32.png',
+      'res/work31.png'
+    ],
+    // youtubeVideo: 'https://www.youtube.com/embed/aatmjpEnf2E'
+  },
+
 };
 
 // Get project ID from URL parameters
@@ -321,7 +374,7 @@ function loadProjectDetails() {
 function loadRelatedProjects(currentProjectId) {
   const relatedContainer = document.getElementById('relatedProjects');
   const allProjects = Object.values(projectsData);
-  const relatedProjects = allProjects.filter(p => p.id !== currentProjectId).slice(0, 4);
+  const relatedProjects = allProjects.filter(p => p.id !== currentProjectId).slice(0, 5);
   
   relatedContainer.innerHTML = relatedProjects.map(project => `
     <a href="card-details.html?id=${project.id}" class="related-card">

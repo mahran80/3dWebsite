@@ -1,396 +1,274 @@
-// card-details.js - Complete Project Details System (updated to support multiple videos)
-// Videos containers now get an inline height (300px) so all videos appear like images.
+/* Role: cashh.js — Dynamic controller for the video hero section.
+   Responsibilities:
+   - Create and manage multiple <video> elements from hidden .scroll-section data attributes
+   - Implement custom scroll navigation and intersection-based section switching
+   - Coordinate text overlay updates and staggered entrance animations
+   - Keep autoplay-compatible settings and handle visibility/resume behavior
+   Note: This file only adds non-destructive comments; the JS logic and statements are unchanged.
+*/
 
-const projectsData = {
-  'project-1': {
-    id: 'project-1',
-    category: 'Work Flow: Open-Plan Office Visualization',
-    title: 'Interior Design- 3D Visualization',
-    image: 'res/service4.png',
-    overview: `
-    A daylight-driven office render showcasing balanced artificial and natural light distribution. Visualization developed from basic 2D plans to test how ceiling fixtures and window systems impact working environments.`,
-    challenge: `
-    The Challenges
-    •
-    Translating 2D architectural plans into a fully realized 3D environment.
-    •
-    Achieving balanced lighting conditions that replicate real-world daylight behavior.
-    •
-    Ensuring visual comfort and realistic material reflections within the office space.`,
-    solution: `
-    •
-    Modeled complete interior layout from 2D CAD references with precision.
-    •
-    Simulated daylight and artificial light systems to analyze luminance distribution.
-    •
-    Applied realistic textures and materials to enhance the visual fidelity of surfaces and furniture.`,
-    results: `
-    Resolution & Impact
-    The final renders delivered a professional and accurate visualization of a modern office atmosphere, enabling the client to make informed decisions on lighting and layout design.
+// Role: Element references used across the script
+const videoContainer = document.getElementById('videoContainer');
+const categoryEl = document.getElementById('category');
+const titleEl = document.getElementById('mainTitle');
+const descEl = document.getElementById('description');
+const btnEl = document.getElementById('continueBtn');
+const sections = document.querySelectorAll('.scroll-section');
 
-    Outcome: Improved lighting plan validation and enhanced interior presentation quality.`,
-    technologies: ['3ds Max', 'Corona Renderer', 'Photoshop', 'Interior Lighting Simulation'],
-    services: [
-      'Interior 3D Visualization',
-      'Lighting Simulation',
-      'Material Realism Enhancement',
-      '2D to 3D Conversion',
-      'Design Presentation Rendering'
-    ],
-    gallery: [
-      'res/work45.png',
-      'res/work4.png',
-      'res/work42.png',
-      'res/work43.png'
-    ],
-    // youtubeVideo: 'https://www.youtube.com/embed/aatmjpEnf2E'
-  },
-  
-  'project-2': {
-    id: 'project-2',
-    category: 'LUXMOD: A Contemporary Villa Study',
-    title: 'Architectural Design & 3D Visualization',
-    image: 'res/work2.png',
-    overview: `
-    A calm residential corner with a nod to Tudor architecture. This 3D visualization emphasizes light, composition, and environment to bring architectural intent to life.`,
-    challenge: `
-    The Challenges
-    •
-    Achieving realistic lighting and material reflection to highlight Tudor architectural elements.
-    •
-    Balancing artistic composition with architectural accuracy.
-    •
-    Creating a calm yet dynamic environment that conveys a sense of comfort and luxury.`,
-    solution: `
-    •
-    Developed detailed 3D models inspired by Tudor-style design principles.
-    •
-    Used advanced rendering techniques to emphasize natural lighting and realistic textures.
-    •
-    Optimized environment setup for depth, balance, and immersive visual storytelling.`,
-    results: `
-    Resolution & Impact
-    The project successfully delivered a highly realistic visualization that communicates both architectural precision and aesthetic elegance.
+// Role: State variables used to track the current displayed section and control transitions
+let currentIndex = 0;
+let isTransitioning = false;
+let textShowTimeout = null;
+let isScrolling = false;
+let canScroll = true;
 
-    Outcome: Enhanced client presentation and improved visualization workflow for residential design projects.`,
-    technologies: ['3ds Max', 'Corona Renderer', 'Photoshop', 'Architectural Visualization'],
-    services: [
-      '3D Exterior Visualization',
-      'Architectural Rendering',
-      'Lighting Simulation',
-      'Material Optimization',
-      'Concept Design Presentation'
-    ],
-    gallery: [
-      'res/work2.png',
-      'res/work23.png',
-      'res/work26.png',
-      'res/work25.png'
-    ],
-    // youtubeVideo: 'https://www.youtube.com/embed/4EXFOUzy1eE'
-  },
-  
-  'project-3': {
-    id: 'project-3',
-    category: 'Urban-Architecture Design and Visualizing',
-    title: ' Verde Haven: A Countryside Escape.',
-    image: 'res/service5.png',
-    overview: `
-    Complete Villa visualization project in a countryside, including modeling, texturing, lighting, and rendering—all executed in multiple urban & 3D applications. Designed to reflect comfort, sophistication, and balance.`,
-    challenge: `
-    The Challenges
-    •
-    Coordinating assets and workflows across multiple 3D and urban design applications.
-    •
-    Modeling and integrating realistic landscape and vegetation around the villa.
-    •
-    Creating high-quality textures and materials that read well at close and distance views.
-    •
-    Balancing render quality with reasonable render times for large exterior scenes.`,
-    solution: `
-    •
-    Implemented a multi-application pipeline for modeling, texturing, and scene assembly.
-    •
-    Used instancing and optimized vegetation workflows to populate the landscape efficiently.
-    •
-    Applied layered PBR materials and detailed texture work for realism.
-    •
-    Tuned lighting rigs and render settings to achieve photoreal exterior illumination and manageable render times.`,
-    results: `
-    Resolution & Impact
-    The project delivered a cohesive and highly realistic countryside villa visualization that communicates comfort and sophistication, aiding client decision-making and marketing materials.
+// Role: Collections for the dynamically created <video> elements and readiness tracking
+let videoElements = [];
+let videosReady = 0;
 
-    Outcome: Enhanced presentation assets, faster stakeholder approvals, and an optimized exterior visualization workflow.`,
-    technologies: ['3ds Max', 'Corona Renderer', 'Substance Painter', 'Photoshop', 'Forest Pack'],
-    services: [
-      'Villa Exterior Visualization',
-      'Landscape & Vegetation Modeling',
-      'Material & Texture Creation',
-      'Lighting & Exterior Rendering',
-      'Post-production & Compositing'
-    ],
-    gallery: [
-      'res/work21.png',
-      'res/work22.png',
-      'res/work24.png'
-    ],
-    youtubeVideo: 'https://www.youtube.com/embed/BkeSDTYeY50'
-    
-  },
-  
-  'project-4': {
-    id: 'project-4',
-    category: 'Smart City Solutions',
-    title: 'DigitalTwin-Urban-SmartCity-Animation-GIS',
-    image: 'res/service6.png',
-    overview: `
-    Urban visualization turned into a game-style navigation experience. The project utilized various modeling and optimization tools before being deployed in Unreal Engine as an interactive walk/fly-through, for Digitaltwinning purposes.
-    An interactive city-scale simulation built in Unreal Engine with real GIS, BIM, and photogrammetry data.
+// Role: Overlay text elements grouped for staggered show/hide behavior
+const textElements = [categoryEl, titleEl, descEl, btnEl];
 
-    The urban simulation showcases:
-    ✅ First-person & fly-through exploration
-    ✅ AI-driven pedestrian crowds
-    ✅ Smart traffic logic — cars stop for pedestrians
-    ✅ Indoor & outdoor navigation
-    ✅ Green spaces, rivers, and infrastructure layers
+// Role: Custom scroll handling — prevents the native continuous scroll and snaps between sections
+let scrollTimeout;
+function handleCustomScroll(event) {
+  if (isTransitioning || !canScroll) {
+    event.preventDefault();
+    return;
+  }
+  if (isScrolling) {
+    event.preventDefault();
+    return;
+  }
+  const delta = event.deltaY;
+  if (Math.abs(delta) < 10) return;
+  event.preventDefault();
+  isScrolling = true;
+  clearTimeout(scrollTimeout);
 
-    This project proves how Digital Twins can support urban planning, mobility studies, climate action, and citizen engagement.`,
-    challenge: `
-    The Challenges
-    •
-    Integrating large-scale GIS, BIM, and photogrammetry datasets into a single optimized Unreal Engine environment.
-    •
-    Creating AI-driven behaviors for pedestrians and vehicles with realistic logic.
-    •
-    Balancing visual fidelity and performance for smooth real-time navigation.
-    •
-    Ensuring accuracy of geospatial context while maintaining interactivity.`,
-    solution: `
-    •
-    Streamlined GIS and BIM data pipelines and optimized assets for real-time rendering.
-    •
-    Developed AI logic for traffic and pedestrian systems to simulate realistic city movement.
-    •
-    Implemented LOD systems and texture streaming to maintain performance.
-    •
-    Added interactive layers for smart city features such as mobility, energy, and climate visualization.`,
-    results: `
-    Resolution & Impact
-    The Smart City Simulation demonstrated how immersive, data-driven digital twins can revolutionize urban planning and citizen engagement.
-
-    Outcome: Improved decision-making, enhanced communication with stakeholders, and a scalable framework for smart urban development.`,
-    technologies: ['Unreal Engine', 'GIS Integration', 'BIM', 'Photogrammetry', 'AI Simulation', 'Blueprint Scripting'],
-    services: [
-      'Digital Twin Development',
-      'Urban Simulation & Visualization',
-      'Real-time GIS Integration',
-      'AI-driven Traffic & Crowd Systems',
-      'Interactive 3D Navigation',
-      'Smart City Data Visualization'
-    ],
-    gallery: [
-      // 'res/work51.png',
-      // 'res/work52.png',
-      // 'res/work53.png'
-    ],
-    videos: [
-      'https://www.youtube.com/embed/4EXFOUzy1eE',
-      'https://player.vimeo.com/video/890274441',
-      'https://player.vimeo.com/video/1134040284',
-      'https://www.youtube.com/embed/WjNHqD8189U'
-    ]
-    
-  },
-
-  // NEW project - shows 3 videos and 1 image when opened
-  'project-5': {
-    id: 'project-5',
-    category: 'Realtime Render, Interactive VR, 3D Visualization',
-    title: 'Immersive Motion: Real-Time VR & Simulations',
-    image: 'res/work54.png',
-    overview: `
-    This real-time city environment blends technical accuracy with visual clarity. Optimized assets and performance settings were tuned for an Unreal Engine navigation tool that feels like an open-world game.`,
-    challenge: `
-    Balancing technical fidelity with runtime performance for VR and cinematic-quality camera shots in an interactive environment.`,
-    solution: `
-     Delivered a responsive VR-ready city demo with cinematic flythroughs and real-time responsiveness suitable for demos and stakeholder walkthroughs.`,
-    results: `
-    A compact, media-rich case study ready for embedding in the portfolio.`,
-    technologies: ['Unreal Engine', 'Realtime Rendering', 'VR Interaction', 'Cinematic Camera Rigs'],
-    services: [
-    'Realtime City Visualization',
-    'VR Integration & Interaction',
-    'Cinematic Camera Design',
-    'Performance Optimization'
-    ],
-    // single image in gallery
-    gallery: [
-      'res/work54.png'
-    ],
-    // multiple embedded YouTube videos (use embed URLs)
-    videos: [
-      'https://www.youtube.com/embed/4EXFOUzy1eE',
-      'https://www.youtube.com/embed/aatmjpEnf2E',
-      'https://www.youtube.com/embed/aGm-jkzsR4w'
-    ]
-  },
-  'project-6': {
-    id: 'project-6',
-    category: 'Tranquil Layers: A Contemporary Living-room Escape',
-    title: '3D Visualization',
-    image: 'res/service2.png',
-    overview: `
-    Subtle textures, layered lighting, and a calming palette come together in this Ultra Realistic 3D Living-room visualization.`,
-    challenge: `
-    The Challenges
-    •
-    Achieving harmony between textures, color palette, and light composition.
-    •
-    Reproducing realistic materials and reflections within a compact interior space.
-    •
-    Balancing soft ambient light with focused highlights to maintain depth and realism.`,
-    solution: `
-    •
-    Built a detailed 3D model emphasizing composition and spatial flow.
-    •
-    Used layered lighting setups to achieve both natural and artificial illumination.
-    •
-    Applied PBR-based materials and high-quality shaders for fabric, wood, and metal surfaces.
-    •
-    Final color grading and tone mapping completed in post-production for warmth and depth.`,
-    results: `
-    Resolution & Impact
-    The result is a serene, photorealistic interior visualization that highlights material quality and ambiance, helping clients envision their modern living spaces with clarity.
-
-    Outcome: Improved design presentation quality and a streamlined rendering workflow.`,
-    technologies: ['3ds Max', 'Vray', 'Photoshop', 'Lighting & Rendering'],
-    services: [
-      'Living-room 3D Visualization',
-      'Material & Texture Design',
-      'Lighting Composition',
-      'Post-production & Color Grading',
-      'Interior Detailing'
-    ],
-
-    gallery: [
-      'res/work3.png',
-      'res/work33.png',
-      'res/work32.png',
-      'res/work31.png'
-    ],
-    // youtubeVideo: 'https://www.youtube.com/embed/aatmjpEnf2E'
-  },
-
-};
-
-// Get project ID from URL parameters
-function getProjectId() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('id') || 'project-1';
+  if (delta > 0) {
+    const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+    if (nextIndex !== currentIndex) {
+      updateSection(nextIndex);
+      sections[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  } else {
+    const prevIndex = Math.max(0, currentIndex - 1);
+    if (prevIndex !== currentIndex) {
+      updateSection(prevIndex);
+      sections[prevIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  scrollTimeout = setTimeout(() => {
+    isScrolling = false;
+  }, 800);
 }
 
-// Load project details
-function loadProjectDetails() {
-  const projectId = getProjectId();
-  const project = projectsData[projectId];
+// Attach the custom scroll handler (non-passive so we can call preventDefault)
+window.addEventListener('wheel', handleCustomScroll, { passive: false });
+
+// Role: Hide overlay text immediately (used during transitions)
+function hideText() {
+  if (textShowTimeout) {
+    clearTimeout(textShowTimeout);
+    textShowTimeout = null;
+  }
+  textElements.forEach(el => {
+    el.classList.remove('show');
+  });
+}
+
+// Role: Show overlay text with a staggered delay, and re-enable scrolling after a safety delay
+function showText(delay = 1000) {
+  if (textShowTimeout) {
+    clearTimeout(textShowTimeout);
+  }
+  canScroll = false;
+  textShowTimeout = setTimeout(() => {
+    textElements.forEach((el, i) => {
+      setTimeout(() => {
+        el.classList.add('show');
+        if (i === textElements.length - 1) {
+          setTimeout(() => {
+            canScroll = true;
+          }, 2000);
+        }
+      }, i * 150);
+    });
+  }, delay);
+}
+
+// Role: Create <video> elements from each .scroll-section and insert them into the hero container
+function createVideoElements() {
+  sections.forEach((section, index) => {
+    const videoSrc = section.dataset.video;
+    
+    // Create video element
+    const video = document.createElement('video');
+    video.className = 'hero-video';
+    video.src = videoSrc;
+
+    // Role: Autoplay-friendly attributes — muted is applied both as property and attribute to improve compatibility
+    video.muted = true;
+    video.setAttribute('muted', ''); // attribute to maximize autoplay compatibility
+    video.autoplay = true;           // attempt autoplay
+
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute('webkit-playsinline', '');
+    video.preload = 'auto';
+    
+    // First video is set active so it is visible initially
+    if (index === 0) {
+      video.classList.add('active');
+    }
+    
+    // Insert the video before the text overlay so text stays on top
+    videoContainer.insertBefore(video, videoContainer.firstChild);
+    videoElements.push(video);
+    
+    // Track when each video has loaded enough data to play
+    video.addEventListener('loadeddata', () => {
+      videosReady++;
+      console.log(`Video ${index + 1} loaded (${videosReady}/${sections.length})`);
+      
+      if (videosReady === sections.length) {
+        startAllVideos();
+      }
+    });
+    
+    // Trigger the browser to load the video
+    video.load();
+  });
+}
+
+// Role: Attempt to start playback on all videos and then show the first overlay text
+function startAllVideos() {
+  console.log('All videos ready, starting playback...');
   
-  if (!project) {
-    window.location.href = 'index.html';
+  videoElements.forEach((video, index) => {
+    video.currentTime = 0;
+    video.play().catch(err => {
+      console.log(`Video ${index} autoplay prevented:`, err);
+    });
+  });
+  
+  // Reveal first text after a short delay to allow the visual transition to settle
+  showText(1500);
+}
+
+// Role: Switch active section — handle video class toggles, restart playback, and update overlay content
+function updateSection(index) {
+  if (index === currentIndex || isTransitioning || index < 0 || index >= sections.length) {
     return;
   }
   
-  // Update page title
-  document.title = `${project.title} - 3DXENON`;
+  isTransitioning = true;
+  canScroll = false;
   
-  // Hero section
-  document.getElementById('heroImage').src = project.image;
-  document.getElementById('detailCategory').textContent = project.category;
-  document.getElementById('detailTitle').textContent = project.title;
+  const oldIndex = currentIndex;
+  currentIndex = index;
   
-  // Main content
-  document.getElementById('detailOverview').textContent = project.overview;
-  document.getElementById('detailChallenge').textContent = project.challenge;
-  document.getElementById('detailSolution').textContent = project.solution;
-  document.getElementById('detailResults').textContent = project.results;
+  const section = sections[index];
+  const category = section.dataset.category;
+  const title = section.dataset.title;
+  const description = section.dataset.description;
+  const highlight = section.dataset.highlight;
   
-  // Services
-  const servicesContainer = document.getElementById('detailServices');
-  servicesContainer.innerHTML = project.services.map(service => 
-    `<li>${service}</li>`
-  ).join('');
+  // Hide overlay text before changing video
+  hideText();
   
-  // Gallery with images and YouTube video(s)
-  const galleryContainer = document.getElementById('detailGallery');
-  
-  let galleryHTML = '';
-
-  // Add images from gallery array (if any)
-  if (project.gallery && project.gallery.length) {
-    galleryHTML += project.gallery.map(img => 
-      `<img src="${img}" alt="${project.title}">`
-    ).join('');
-  }
-
-  // If there is a 'videos' array, add each as an iframe
-  // NOTE: set inline height (300px) so video boxes match image height and all appear correctly
-  if (project.videos && project.videos.length) {
-    galleryHTML += project.videos.map(vUrl => `
-      <div class="video-container" style="height:300px;">
-        <iframe
-          src="${vUrl}"
-          title="YouTube video player"
-          frameborder="0"
-          loading="lazy"
-          style="width:100%; height:100%; border:0;"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen>
-        </iframe>
-      </div>
-    `).join('');
-  } else if (project.youtubeVideo) {
-    // backward compatibility for single youtubeVideo field
-    galleryHTML += `
-      <div class="video-container" style="height:300px;">
-        <iframe
-          src="${project.youtubeVideo}" 
-          title="YouTube video player" 
-          frameborder="0" 
-          loading="lazy"
-          style="width:100%; height:100%; border:0;"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen>
-        </iframe>
-      </div>
-    `;
-  }
-  
-  galleryContainer.innerHTML = galleryHTML;
-  
-  // Load related projects
-  loadRelatedProjects(projectId);
+  // Small delay to smooth the visual crossfade
+  setTimeout(() => {
+    // Remove active from old video
+    videoElements[oldIndex].classList.remove('active');
+    
+    // Add active to new video
+    videoElements[index].classList.add('active');
+    
+    // Restart the new video from the beginning
+    videoElements[index].currentTime = 0;
+    videoElements[index].play().catch(err => {
+      console.log('Play prevented:', err);
+    });
+    
+    // Update overlay text content to match the new section
+    categoryEl.textContent = category;
+    titleEl.textContent = title;
+    descEl.innerHTML = description + '<span class="highlight">' + '</span> ';
+    
+    // After the visual transition, re-enable transitions and show text
+    setTimeout(() => {
+      isTransitioning = false;
+      showText(400);
+    }, 600);
+    
+  }, 200);
 }
 
-// Load related projects
-function loadRelatedProjects(currentProjectId) {
-  const relatedContainer = document.getElementById('relatedProjects');
-  const allProjects = Object.values(projectsData);
-  const relatedProjects = allProjects.filter(p => p.id !== currentProjectId).slice(0, 5);
-  
-  relatedContainer.innerHTML = relatedProjects.map(project => `
-    <a href="card-details.html?id=${project.id}" class="related-card">
-      <div class="related-card-image">
-        <img src="${project.image}" alt="${project.title}">
-      </div>
-      <div class="related-card-content">
-        <div class="related-card-category">${project.category}</div>
-        <h3 class="related-card-title">${project.title}</h3>
-      </div>
-    </a>
-  `).join('');
+// Role: IntersectionObserver configuration to detect which invisible scroll-section is most visible
+const observerOptions = {
+  root: null,
+  threshold: [0.1, 0.3, 0.5, 0.7, 0.9],
+  rootMargin: '-10% 0px -10% 0px'
+};
+
+let lastDetectedIndex = -1;
+const observer = new IntersectionObserver((entries) => {
+  let mostVisible = null;
+  let maxRatio = 0;
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+      maxRatio = entry.intersectionRatio;
+      mostVisible = entry;
+    }
+  });
+  if (mostVisible) {
+    const index = Array.from(sections).indexOf(mostVisible.target);
+    if (index !== -1 && index !== lastDetectedIndex) {
+      lastDetectedIndex = index;
+      updateSection(index);
+    }
+  }
+}, observerOptions);
+
+sections.forEach(section => observer.observe(section));
+
+// Role: Keyboard navigation — map ArrowDown/Space to next, ArrowUp to previous
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+    sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    const prevIndex = Math.max(0, currentIndex - 1);
+    sections[prevIndex].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// Role: Continue button behavior — scroll to the next section when clicked
+btnEl.addEventListener('click', (e) => {
+  e.preventDefault();
+  const nextIndex = Math.min(sections.length - 1, currentIndex + 1);
+  sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+});
+
+// Role: Initialization — create videos and prepare system when the window has fully loaded
+function init() {
+  console.log('Initializing seamless video system...');
+  createVideoElements();
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', loadProjectDetails);
+window.addEventListener('load', init);
 
-// Smooth scroll to top
-window.scrollTo(0, 0);
+// Role: Resume playback for videos when the document becomes visible again (useful after switching tabs)
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    videoElements.forEach((video, index) => {
+      if (video.paused) {
+        video.play().catch(err => console.log('Resume failed:', err));
+      }
+    });
+  }
+});

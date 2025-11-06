@@ -195,7 +195,7 @@ function updateSection(index) {
     // Update overlay text content to match the new section
     categoryEl.textContent = category;
     titleEl.textContent = title;
-    descEl.innerHTML = description + '<span class="highlight">' + highlight + '</span> stories is our bread and butter.';
+    descEl.innerHTML = description + '<span class="highlight">' + '</span> ';
     
     // After the visual transition, re-enable transitions and show text
     setTimeout(() => {

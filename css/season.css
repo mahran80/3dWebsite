@@ -248,3 +248,30 @@ body {
         font-size: 12px;
     }
 }
+/* Fix for MOBILE landscape mode ONLY (not desktop) */
+@media only screen and (max-device-width: 812px) and (orientation: landscape) {
+    .seasonal-container {
+        padding-bottom: 40%;
+    }
+    
+    .controls-wrapper {
+        padding: 8px 20px 10px;
+    }
+    
+    .slider-container {
+        padding: 5px 0;
+        margin-bottom: 8px;
+    }
+    
+    .season-icons {
+        gap: 8px;
+    }
+    
+    .season-icon {
+        padding: 6px 10px;
+    }
+    
+    .season-icon span {
+        font-size: 11px;
+    }
+}

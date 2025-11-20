@@ -6,7 +6,16 @@
     
     html, body { 
       height: 100%; 
-    }
+      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;  /* IE and Edge */
+      }
+
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+    display: none;
+        }
+    
     
     body {
       font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial;
@@ -161,6 +170,7 @@
       z-index: 10;
       pointer-events: none;
     }
+
 
     /* Responsive */
     @media (max-width: 768px) {

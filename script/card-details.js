@@ -327,7 +327,7 @@ function loadProjectDetails() {
   // Add images from gallery array (if any)
   if (project.gallery && project.gallery.length) {
     galleryHTML += project.gallery.map(img => 
-      `<img src="${img}" alt="${project.title}">`
+      `<img src="${img}" alt="${project.title}" class="gallery-image" onclick="openLightbox('${img}')">`
     ).join('');
   }
 
@@ -368,6 +368,9 @@ function loadProjectDetails() {
   
   // Load related projects
   loadRelatedProjects(projectId);
+  
+  // Create lightbox
+  createLightbox();
 }
 
 // Load related projects
@@ -387,6 +390,47 @@ function loadRelatedProjects(currentProjectId) {
       </div>
     </a>
   `).join('');
+}
+
+// Create Lightbox Element
+function createLightbox() {
+  const lightboxHTML = `
+    <div id="imageLightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <img class="lightbox-content" id="lightboxImage">
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', lightboxHTML);
+  
+  // Close lightbox when clicking X or outside image
+  document.getElementById('imageLightbox').addEventListener('click', function(e) {
+    if (e.target.classList.contains('lightbox') || e.target.classList.contains('lightbox-close')) {
+      closeLightbox();
+    }
+  });
+  
+  // Close with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+}
+
+// Open Lightbox
+function openLightbox(imageSrc) {
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImg = document.getElementById('lightboxImage');
+  lightboxImg.src = imageSrc;
+  lightbox.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// Close Lightbox
+function closeLightbox() {
+  const lightbox = document.getElementById('imageLightbox');
+  lightbox.style.display = 'none';
+  document.body.style.overflow = 'auto';
 }
 
 // Initialize when page loads

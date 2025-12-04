@@ -399,6 +399,7 @@ body {
   border-radius: 50%;
   color: rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .footer-social a svg {
